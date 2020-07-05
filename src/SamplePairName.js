@@ -6,11 +6,10 @@ import TableRow from '@material-ui/core/TableRow';
 
 function SamplePairName(props) {
   return (
-    // <li>
-    //   {props.name}
-    // </li>
-
     <TableRow key={props.name}>
+      {/* <li>
+        {props.name}
+      </li> */}
       <TableCell component="th" scope="row">
         {`${props.name} ${props.uniqueId}`}
       </TableCell>

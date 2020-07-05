@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-// import { Form } from './Form';
 
 import Demo from './Demo';
 import PairSelect from './PairSelect';
 import History from './History';
 
-// Design
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
@@ -14,7 +12,7 @@ import Typography from '@material-ui/core/Typography';
 
 class App extends Component {
   constructor(props) {
-    super(props) // 親クラスのpropsを参照するために必要
+    super(props)
     this.state = {
       pairs: [
         { name: 'USD_JPY', uniqueId: -2 },
@@ -23,10 +21,6 @@ class App extends Component {
       uniqueId: 0
     };
   }
-
-  // componentDidMount() {
-  //   console.log('hoge');
-  // }
 
   addPair = (name) => {
     const { pairs, uniqueId } = this.state;

@@ -1,11 +1,5 @@
 import React, { Component } from 'react';
-
-// Design
 import FormControl from '@material-ui/core/FormControl';
-// import InputLabel from '@material-ui/core/InputLabel';
-// import MenuItem from '@material-ui/core/MenuItem';
-// import Select from '@material-ui/core/Select';
-
 class PairSelect extends Component {
   constructor(props) {
     super(props);
