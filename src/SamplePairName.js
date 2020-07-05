@@ -12,7 +12,7 @@ function SamplePairName(props) {
 
     <TableRow key={props.name}>
       <TableCell component="th" scope="row">
-        {props.name}
+        {`${props.name} ${props.uniqueId}`}
       </TableCell>
     </TableRow>
   );

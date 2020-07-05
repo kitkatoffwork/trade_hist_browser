@@ -19,7 +19,7 @@ import SamplePairName from './SamplePairName';
 class History extends Component {
   render() {
     const list = this.props.pairs.map(pair => {
-      return <SamplePairName {...pair} />
+      return <SamplePairName {...pair} key={pair.uniqueId} />
     });
     return (
       <Card variant="outlined">

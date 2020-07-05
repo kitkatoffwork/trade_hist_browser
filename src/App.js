@@ -17,9 +17,10 @@ class App extends Component {
     super(props) // 親クラスのpropsを参照するために必要
     this.state = {
       pairs: [
-        { name: 'USD_JPY' },
-        { name: 'EUR_USD' }
-      ]
+        { name: 'USD_JPY', uniqueId: -2 },
+        { name: 'EUR_USD', uniqueId: -1 }
+      ],
+      uniqueId: 0
     };
   }
 
@@ -28,19 +29,19 @@ class App extends Component {
   // }
 
   addPair = (name) => {
-    const { pairs } = this.state;
+    const { pairs, uniqueId } = this.state;
 
     pairs.push({
-      name
+      name: name, uniqueId: uniqueId
     });
 
     this.setState({
-      pairs
+      pairs, uniqueId: uniqueId + 1
     });
   }
   resetPairs = () => {
     this.setState({
-      pairs: [],
+      pairs: [], uniqueId: 0
     });
   }
 
