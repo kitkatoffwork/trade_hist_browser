@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import TasksApp from '../components/TasksApp';
-import { inputTask, addTask } from '../actions/tasks';
+import { inputTask, addTask, asyncAddTask } from '../actions/tasks';
 
 function mapStateToProps({ task, tasks }) {
   return {
@@ -11,11 +11,14 @@ function mapStateToProps({ task, tasks }) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    inputTask(task) {
+      dispatch(inputTask(task));
+    },
     addTask(task) {
       dispatch(addTask(task));
     },
-    inputTask(task) {
-      dispatch(inputTask(task));
+    asyncAddTask(task) {
+      dispatch(asyncAddTask(task));
     }
   }
 }
