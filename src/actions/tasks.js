@@ -8,6 +8,12 @@ export const addTask = (task) => ({
   payload: { task }
 });
 
+const updateInput = (value) => ({
+  type: 'INPUT_TASK',
+  payload: {
+    value,
+  },
+})
 
 const sleep1000ms = () => {
   return new Promise(resolve => {
@@ -19,7 +25,23 @@ const sleep1000ms = () => {
 
 export function asyncAddTask(task) {
   return async(dispatch, getState) => {
+    const { task, tasks } = getState()
+    const regexp = new RegExp(task)
+
+    if (regexp.test(tasks)) {
+      console.log('This task is duplicated !');
+      return;
+    }
+
     await sleep1000ms();
     dispatch(addTask(task))
+  };
+}
+
+//  INFO: redux-thunkがあるからできること
+export function addTaskAndClear(task) {
+  return (dispatch) => {
+    dispatch(addTask(task));
+    dispatch(updateInput(''));
   };
 }
