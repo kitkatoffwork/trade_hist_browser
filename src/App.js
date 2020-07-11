@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from "react-router-dom";
 
 import Demo from './Demo';
 import PairSelect from './PairSelect';
@@ -45,7 +46,9 @@ class App extends Component {
         <AppBar position="static">
           <Toolbar>
             <Typography>サンプルページ</Typography>
-            <Button color="inherit">Login</Button>
+            <Button color="inherit">
+              <Link to="/task">TODO MEMO</Link>
+            </Button>
           </Toolbar>
         </AppBar>
 
