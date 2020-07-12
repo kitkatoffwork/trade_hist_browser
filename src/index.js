@@ -1,21 +1,16 @@
+import { ConnectedRouter } from 'connected-react-router'
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router, Route } from "react-router-dom";
-import { createStore, combineReducers, applyMiddleware } from 'redux';
-import { createLogger } from 'redux-logger';
-import thunk from 'redux-thunk';
-import * as serviceWorker from './serviceWorker';
+import { Route, Switch } from "react-router-dom";
 
 import './index.css';
-import App from './App';
-import * as reducers from './reducers';
-import TasksApp from './containers/TasksApp';
 
-const middlewares = [createLogger({collapsed: true}), thunk];
-const store = createStore(
-  combineReducers(reducers), applyMiddleware(...middlewares)
-);
+import App from './App';
+import TasksApp from './containers/TasksApp';
+import * as serviceWorker from './serviceWorker';
+import loadStore, { history }  from './store'
+const store = loadStore()
 
 // INFO: axios と react の連携について
 // http://i-plug-tech.hatenablog.com/entry/2016/10/20/110000
@@ -23,10 +18,12 @@ const store = createStore(
 function renderApp(store) {
   ReactDOM.render(
     <Provider store={store}>
-      <Router>
-        <Route exact path="/" component={App} />
-        <Route exact path="/task" component={TasksApp} />
-      </Router>
+      <ConnectedRouter history={history}>
+        <Switch>
+          <Route exact path="/" component={App} />
+          <Route exact path="/task" component={TasksApp} />
+        </Switch>
+      </ConnectedRouter>
     </Provider>,
     document.getElementById('root')
   );

@@ -1,3 +1,10 @@
+import { combineReducers } from 'redux'
+import { connectRouter } from 'connected-react-router'
+
 import tasksReducer from './tasks'
 
-export { tasksReducer, };
+const createRootReducer = (history) => combineReducers({
+  router: connectRouter(history),
+  tasksReducer,
+})
+export default createRootReducer
