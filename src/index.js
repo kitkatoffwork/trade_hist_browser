@@ -8,6 +8,7 @@ import './index.css';
 
 import App from './App';
 import TasksApp from './containers/TasksApp';
+import SampleRequesting from './containers/SampleRequesting';
 import * as serviceWorker from './serviceWorker';
 import loadStore, { history }  from './store'
 const store = loadStore()
@@ -16,12 +17,19 @@ const store = loadStore()
 // http://i-plug-tech.hatenablog.com/entry/2016/10/20/110000
 
 function renderApp(store) {
+  console.log(SampleRequesting);
+  console.log(TasksApp);
+
   ReactDOM.render(
     <Provider store={store}>
       <ConnectedRouter history={history}>
         <Switch>
           <Route exact path="/" component={App} />
           <Route exact path="/task" component={TasksApp} />
+          <Route
+            exact path="/request"
+            render={() => <SampleRequesting pareName="USD_JPY" />}
+          />
         </Switch>
       </ConnectedRouter>
     </Provider>,
