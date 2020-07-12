@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 export default function TasksApp({ task, tasks, inputTask, addTask, asyncAddTask }) {
@@ -18,3 +19,8 @@ export default function TasksApp({ task, tasks, inputTask, addTask, asyncAddTask
     </>
   )
 }
+
+TasksApp.propTypes = {
+  task: PropTypes.string.isRequired,
+  tasks: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired
+};
