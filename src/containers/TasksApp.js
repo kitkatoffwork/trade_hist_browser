@@ -2,10 +2,10 @@ import { connect } from 'react-redux';
 import TasksApp from '../components/TasksApp';
 import { inputTask, addTask, asyncAddTask } from '../actions/tasks';
 
-function mapStateToProps({ task, tasks }) {
+function mapStateToProps(state) {
   return {
-    task,
-    tasks
+    task: state.tasksReducer.task,
+    tasks: state.tasksReducer.tasks
   };
 }
 

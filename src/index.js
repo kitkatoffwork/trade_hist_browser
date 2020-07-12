@@ -2,18 +2,23 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
 import * as serviceWorker from './serviceWorker';
 
 import './index.css';
 import App from './App';
-import tasksReducer from './reducers/tasks';
+import * as reducers from './reducers';
 import TasksApp from './containers/TasksApp';
 
 const middlewares = [createLogger({collapsed: true}), thunk];
-const store = createStore(tasksReducer, applyMiddleware(...middlewares));
+const store = createStore(
+  combineReducers(reducers), applyMiddleware(...middlewares)
+);
+
+// INFO: axios と react の連携について
+// http://i-plug-tech.hatenablog.com/entry/2016/10/20/110000
 
 function renderApp(store) {
   ReactDOM.render(

@@ -25,8 +25,9 @@ const sleep1000ms = () => {
 
 export function asyncAddTask(task) {
   return async(dispatch, getState) => {
-    const { task, tasks } = getState()
-    const regexp = new RegExp(task)
+    const { task, tasks } = getState().tasksReducer;
+    const regexp = new RegExp(task);
+    console.log(`task: ${task}, tasks: ${tasks}`);
 
     if (regexp.test(tasks)) {
       console.log('This task is duplicated !');
