@@ -17,8 +17,8 @@ const store = loadStore()
 // http://i-plug-tech.hatenablog.com/entry/2016/10/20/110000
 
 function renderApp(store) {
-  console.log(SampleRequesting);
-  console.log(TasksApp);
+  // console.log(SampleRequesting);
+  // console.log(TasksApp);
 
   ReactDOM.render(
     <Provider store={store}>

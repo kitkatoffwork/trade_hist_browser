@@ -4,6 +4,8 @@ import * as actions from '../actions/SampleRequesting';
 
 const mapStateToProps = (state, ownProps) => ({
   pareName: ownProps.pareName,
+  data: state.requestReducer.data,
+  error: state.requestReducer.error
 });
 
 const mapDispatchToProps = (dispatch) => ({

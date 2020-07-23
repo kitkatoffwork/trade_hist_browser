@@ -14,22 +14,41 @@ export default class SampleRequesting extends React.Component {
   }
 
   render() {
+    const { pareName, data, error } = this.props;
     return (
       <>
         <h2>SampleRequesting Component</h2>
-        <p>{this.props.pareName}</p>
-        {/* <ul>
-          {
-            this.state.tasks.map(function(item, i) {
-              return (<li key={i}>{item}</li>);
-            })
+        <p>Pare Name: {pareName}</p>
+
+        {(() => {
+          if (error) {
+            return <p>エラーが発生しました。リロードして下さい。</p>
+          } else if (data === 'undefined') {
+            return <p>Now Loading ...</p>
+          } else {
+            return(
+              <ul>
+                {data.hoge.map( (datum, i) => (
+                  <li key={i}>{Object.keys(datum)[0]}</li>
+                ))}
+              </ul>
+            );
           }
-        </ul> */}
+        })()}
+
       </>
     )
   }
 }
 
 SampleRequesting.propTypes = {
+  onMount: PropTypes.func.isRequired,
+  onUpdate: PropTypes.func.isRequired,
   pareName: PropTypes.string.isRequired,
+  data: PropTypes.shape({
+    hoge: PropTypes.arrayOf(
+      PropTypes.objectOf(PropTypes.number)
+    )
+  }),
+  error: PropTypes.bool.isRequired
 };
