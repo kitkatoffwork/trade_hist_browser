@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
 import Demo from './Demo';
+import SampleChart from './SampleChart';
 import PairSelect from './PairSelect';
 import History from './History';
 
@@ -58,6 +59,7 @@ class App extends Component {
           {/* <Form name = 'なまえ' /> */}
           <Button onClick={this.resetPairs} >Clear</Button>
         </Container>
+        <SampleChart />
         <Demo />
       </>
     );
