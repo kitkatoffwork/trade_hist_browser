@@ -278,7 +278,7 @@ class SampleChart extends Component {
   }
   render() {
     return (
-      // <Chart options={this.state.options} series={this.state.series} type="bar" width={500} height={320} />
+      /* <Chart options={this.state.options} series={this.state.series} type="bar" width={500} height={320} /> */
       <div id="chart">
         <ReactApexChart options={this.state.options} series={this.state.series} type="candlestick" width={800} height={350} />
       </div>
