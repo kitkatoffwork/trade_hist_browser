@@ -7,6 +7,7 @@ import { Route, Switch } from "react-router-dom";
 import './index.css';
 
 import App from './App';
+import Header from './Header';
 import TasksApp from './containers/TasksApp';
 import SampleRequesting from './containers/SampleRequesting';
 import * as serviceWorker from './serviceWorker';
@@ -23,6 +24,8 @@ function renderApp(store) {
   ReactDOM.render(
     <Provider store={store}>
       <ConnectedRouter history={history}>
+        <Header />
+
         <Switch>
           <Route exact path="/" component={App} />
           <Route exact path="/task" component={TasksApp} />
