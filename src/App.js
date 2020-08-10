@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
-import { Link } from "react-router-dom";
 
 import Demo from './Demo';
 import SampleChart from './SampleChart';
 import PairSelect from './PairSelect';
 import History from './History';
 
-import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 
 class App extends Component {
   constructor(props) {
@@ -44,15 +40,6 @@ class App extends Component {
   render() {
     return (
       <>
-        <AppBar position="static">
-          <Toolbar>
-            <Typography>サンプルページ</Typography>
-            <Button color="inherit">
-              <Link to="/task">TODO MEMO</Link>
-            </Button>
-          </Toolbar>
-        </AppBar>
-
         <Container> {/*maxWidth="sm"*/}
           <PairSelect addPair={this.addPair} />
           <History pairs={this.state.pairs}/>
@@ -60,6 +47,8 @@ class App extends Component {
           <Button onClick={this.resetPairs} >Clear</Button>
         </Container>
         <SampleChart />
+        <span>test hoge huga !</span>
+
         <Demo />
       </>
     );

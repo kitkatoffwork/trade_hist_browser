@@ -2,8 +2,19 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
+jest.mock("react-apexcharts", () => jest.fn(() => { return null; }) );
+jest.mock("apexcharts", () => (
+  {
+    exec: jest.fn(() => {
+      return new Promise(
+        (resolve, reject) => { resolve("uri"); }
+      );
+    })
+  }
+));
+
+test('renders hoge huga', () => {
   const { getByText } = render(<App />);
-  const linkElement = getByText(/learn react/i);
+  const linkElement = getByText(/hoge huga/i);
   expect(linkElement).toBeInTheDocument();
 });
