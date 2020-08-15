@@ -27,11 +27,19 @@ export default class SampleRequesting extends React.Component {
             return <p>Now Loading ...</p>
           } else {
             return(
-              <ul>
-                {data.hoge.map( (datum, i) => (
-                  <li key={i}>{Object.keys(datum)[0]}</li>
-                ))}
-              </ul>
+              <table>
+                <thead>
+                  <tr><th>hoge</th></tr>
+                </thead>
+                <tbody>
+                  {data.map( (datum, i) => (
+                    <tr key={i}>
+                      <td>{datum.hoge}</td>
+                      <td>{datum.huga}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             );
           }
         })()}
@@ -45,10 +53,14 @@ SampleRequesting.propTypes = {
   onMount: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
   pareName: PropTypes.string.isRequired,
-  data: PropTypes.shape({
-    hoge: PropTypes.arrayOf(
-      PropTypes.objectOf(PropTypes.number)
+  data: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(
+      PropTypes.shape({
+        hoge: PropTypes.number,
+        huga: PropTypes.number,
+      })
     )
-  }),
+  ]),
   error: PropTypes.bool.isRequired
 };
