@@ -18,7 +18,13 @@ export const requestHist = (pareName) => {
     dispatch(request(pareName));
 
     try {
-      const response = await fetch(API_URL);
+      const response = await fetch(
+        API_URL + '?hoge=123', {
+          // headers: {'Content-Type': 'application/json'},
+          // method: 'POST',
+          // body: JSON.stringify({aa: 'dwa', bere: 13456})
+        }
+      );
       const data = await response.json();
       dispatch(receiveData(pareName, null, data));
     } catch (error) {

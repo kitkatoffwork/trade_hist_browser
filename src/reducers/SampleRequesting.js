@@ -4,9 +4,9 @@ const initialState = {
   error: false
 }
 
-const extractData = response => {
+/* const extractData = response => {
   return JSON.parse(response.body);
-}
+} */
 
 export default function requestReducer(state = initialState, action) {
   switch (action.type) {
@@ -19,7 +19,7 @@ export default function requestReducer(state = initialState, action) {
     case 'RECEIVE_RESPONSE':
       return action.payload.error
         ? { ...state, error: true }
-        : { ...state, data: extractData(action.payload.response) };
+        : { ...state, data: action.payload.response };
     case 'FINISH_REQUEST':
       return {
         ...state,
