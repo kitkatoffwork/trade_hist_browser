@@ -12,36 +12,42 @@ export const toEntriesSource = function (dfRows) {
 /* --------------------------------------
       calculate min, max of array
 -------------------------------------- */
-const extractValues = function (hash) {
-  return Object.keys(hash).map(function(key) { return hash[key]; });
-}
-// const aryMax = function (a, b) { return Math.max(a, b); }
-const aryMin = function (a, b) { return Math.min(a, b); }
-// let max = ary.reduce(aryMax); // => 10
-const min = function (array) { return array.reduce(aryMin); }
-const keyWithTarget = function (hash, target) {
-  const result = Object.keys(hash).reduce(function(res, key) {
-    const _keyWithTarget = hash[key] === target ? key : res;
-    return _keyWithTarget
-  }, null);
-  return result;
-}
-
 export const minimize = function (hashArray) {
-  const firstRow = hashArray[0];
-  const values = extractValues(firstRow);
-  const numbers = filter_numbers(values);
-  const minNumber = min(numbers);
-  const keyOfMin = keyWithTarget(firstRow, minNumber);
+  // const firstRow = hashArray[0];
+  // const values = extractValues(firstRow);
+  // const numbers = filterNumbers(values);
+  // const minNumber = min(numbers);
+  const keyOfMin = 'low'; // keyWithTarget(firstRow, minNumber);
+  // console.log(firstRow);
+  // console.log(minNumber);
+  // console.log(keyOfMin);
   const minCandidates = hashArray.map(function(row) { return row[keyOfMin] })
 
   return min(minCandidates);
 }
 
-const filter_numbers = function(values) {
-  const result = values.filter(function(value) { return Object.prototype.toString.call(value) === "[object Number]"; })
-  return result
-}
+// const extractValues = function (hash) {
+//   return Object.keys(hash).map(function(key) { return hash[key]; });
+// }
+
+// const filterNumbers = function(values) {
+//   const result = values.filter(function(value) { return Object.prototype.toString.call(value) === "[object Number]"; })
+//   return result
+// }
+
+const min = function (array) { return array.reduce(aryMin); }
+const aryMin = function (a, b) { return Math.min(a, b); }
+// let max = ary.reduce(aryMax); // => 10
+// const aryMax = function (a, b) { return Math.max(a, b); }
+
+// const keyWithTarget = function (hash, target) {
+//   const result = Object.keys(hash).reduce(function(res, key) {
+//     const _keyWithTarget = hash[key] === target ? key : res;
+//     return _keyWithTarget
+//   }, null);
+//   return result;
+// }
+
 
 /* ---------------------
       Sample Data

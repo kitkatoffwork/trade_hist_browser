@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import CandleChart from './candle_chart';
 
 export default class SampleRequesting extends React.Component {
   componentDidMount() {
@@ -26,19 +27,31 @@ export default class SampleRequesting extends React.Component {
             return <p>Now Loading ...</p>
           } else {
             return(
-              <table>
-                <thead>
-                  <tr><th>hoge</th></tr>
-                </thead>
-                <tbody>
-                  {data.map( (datum, i) => (
-                    <tr key={i}>
-                      <td>{datum.hoge}</td>
-                      <td>{datum.huga}</td>
+              <>
+                <CandleChart candles={data.slice(-400)} />
+                <table>
+                  <thead>
+                    <tr>
+                      <th>time</th>
+                      <th>open</th>
+                      <th>high</th>
+                      <th>low</th>
+                      <th>close</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {data.map( (datum, i) => (
+                      <tr key={i}>
+                        <td>{datum.time}</td>
+                        <td>{datum.open}</td>
+                        <td>{datum.high}</td>
+                        <td>{datum.low}</td>
+                        <td>{datum.close}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </>
             );
           }
         })()}
