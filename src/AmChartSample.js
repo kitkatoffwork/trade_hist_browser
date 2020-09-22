@@ -426,8 +426,8 @@ const candleData = [{
   'date': '2018-10-16',
   'open': '172.69',
   'high': '173.04',
-  'low': '169.18',
-  'close': '172.75'
+  'low': 169.18,
+  'close': 172.75
 }];
 
 export default AmChartSample;
