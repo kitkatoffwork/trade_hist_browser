@@ -26,36 +26,82 @@ class AmChartSample extends Component {
 
 function prepareChart() {
   // ... chart code goes here ...
-  let chart = am4core.create('chartdiv', am4charts.XYChart);
+  const chart = am4core.create('chartdiv', am4charts.XYChart);
   chart.cursor = new am4charts.XYCursor();
   chart.dateFormatter.inputDateFormat = 'yyyy-MM-dd';
   chart.paddingRight = 20;
 
-  let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+  const dateAxis = chart.xAxes.push(new am4charts.DateAxis());
   dateAxis.renderer.grid.template.location = 0;
   dateAxis.renderer.minGridDistance = 60;
   dateAxis.skipEmptyPeriods = true;
 
-  let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+  const valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
   valueAxis.tooltip.disabled = true;
   valueAxis.renderer.minWidth = 35;
 
-  var series = chart.series.push(new am4charts.CandlestickSeries());
-  series.dataFields.dateX = 'date';
-  series.dataFields.valueY = 'close';
-  series.dataFields.openValueY = 'open';
-  series.dataFields.lowValueY = 'low';
-  series.dataFields.highValueY = 'high';
-  series.tooltipText = 'Open: [bold]${openValueY.value}[/]\nLow: [bold]${lowValueY.value}[/]\nHigh: [bold]${highValueY.value}[/]\nClose: [bold]${valueY.value}[/]';
+  const candlestick = addCandlestick(chart)
+  addLineSample(chart);
+  addScatterSample(chart)
 
-  let scrollbarX = new am4charts.XYChartScrollbar();
-  scrollbarX.series.push(series);
+  const scrollbarX = new am4charts.XYChartScrollbar();
+  scrollbarX.series.push(candlestick);
   chart.scrollbarX = scrollbarX;
   // chart.scrollbarX = new am4core.Scrollbar();
 
+  return chart;
+}
+
+function addCandlestick(chart) {
+  const candlestick = chart.series.push(new am4charts.CandlestickSeries());
+  candlestick.dataFields.dateX = 'date';
+  candlestick.dataFields.valueY = 'close';
+  candlestick.dataFields.openValueY = 'open';
+  candlestick.dataFields.lowValueY = 'low';
+  candlestick.dataFields.highValueY = 'high';
+  candlestick.tooltipText = 'Open: [bold]{openValueY.value}[/]\nLow: [bold]{lowValueY.value}[/]\nHigh: [bold]{highValueY.value}[/]\nClose: [bold]{valueY.value}[/]';
+
   chart.data = candleData;
 
-  return chart;
+  return candlestick;
+}
+
+function addLineSample(chart) {
+  const lineSample = chart.series.push(new am4charts.LineSeries());
+  lineSample.dataFields.dateX = 'value';
+  lineSample.dataFields.valueY = 'value2';
+  lineSample.strokeWidth = 2
+  lineSample.stroke = chart.colors.getIndex(3);
+  lineSample.strokeOpacity = 0.7;
+  lineSample.data = [
+    { 'value': '2018-08-05', 'value2': 140 },
+    { 'value': '2018-08-26', 'value2': 170 }
+  ];
+}
+
+function addScatterSample(chart) {
+  const lineSample = chart.series.push(new am4charts.LineSeries());
+  lineSample.dataFields.dateX = 'value';
+  lineSample.dataFields.valueY = 'value2';
+  lineSample.strokeWidth = 2
+  lineSample.stroke = chart.colors.getIndex(3);
+  lineSample.strokeOpacity = 0.0;
+  lineSample.data = [
+    { 'value': '2018-08-08', 'value2': 140 },
+    { 'value': '2018-09-03', 'value2': 150 }
+  ];
+
+  // Add a bullet
+  let bullet = lineSample.bullets.push(new am4charts.Bullet());
+  // Add a triangle to act as am arrow
+  let arrow = bullet.createChild(am4core.Triangle);
+  arrow.horizontalCenter = "middle";
+  arrow.verticalCenter = "middle";
+  arrow.strokeWidth = 0;
+  arrow.fill = chart.colors.getIndex(0);
+  arrow.direction = "top";
+  arrow.width = 12;
+  arrow.height = 12;
 }
 
 const candleData = [{
