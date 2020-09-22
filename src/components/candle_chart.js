@@ -30,7 +30,7 @@ class CandleChart extends Component {
     dateAxis.skipEmptyPeriods = true;
 
     const valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-    valueAxis.tooltip.disabled = true;
+    // valueAxis.tooltip.disabled = true;
     valueAxis.renderer.minWidth = 35;
 
     const candlestick = this.addCandlestick(chart);
