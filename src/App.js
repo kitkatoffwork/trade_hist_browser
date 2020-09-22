@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import Demo from './Demo';
 import SampleChart from './SampleChart';
+import AmChartSample from './AmChartSample';
 import PairSelect from './PairSelect';
 import History from './History';
 
@@ -47,6 +48,7 @@ class App extends Component {
           <Button onClick={this.resetPairs} >Clear</Button>
         </Container>
         <SampleChart />
+        <AmChartSample />
         <span>test hoge huga !</span>
 
         <Demo />
