@@ -55,11 +55,7 @@ class CandleChart extends Component {
         name: 'candles',
         type: 'candlestick',
         data: apexHelper.toCandlesSource(this.props.candles)
-      }, /* {
-        name: 'entries',
-        type: 'scatter',
-        data: apexHelper.toEntriesSource(apexHelper.dots)
-      }*/ ]
+      },]
     }
   }
   render() {
