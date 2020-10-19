@@ -10,6 +10,9 @@ am4core.useTheme(am4themes_animated);
 // https://www.amcharts.com/demos/date-based-data/
 // https://www.amcharts.com/demos/duration-on-value-axis/
 // https://www.amcharts.com/demos/stock-chart-candlesticks/
+// https://www.amcharts.com/demos/scatter-chart/
+// https://www.amcharts.com/docs/v4/concepts/bullets/
+// https://www.amcharts.com/docs/v4/getting-started/integrations/using-react/
 
 class AmChartSample extends Component {
   componentDidMount() {
@@ -65,13 +68,14 @@ function prepareChart() {
 
 function addCandlestick(chart) {
   const candlestick = chart.series.push(new am4charts.CandlestickSeries());
+  candlestick.name = 'candlestick';
   candlestick.dataFields.dateX = 'date';
   candlestick.dataFields.valueY = 'close';
   candlestick.dataFields.openValueY = 'open';
   candlestick.dataFields.lowValueY = 'low';
   candlestick.dataFields.highValueY = 'high';
+  // candlestick.tooltip.pointerOrientation = "vertical";
   candlestick.tooltipText = 'Open: [bold]{openValueY.value}[/]\nLow: [bold]{lowValueY.value}[/]\nHigh: [bold]{highValueY.value}[/]\nClose: [bold]{valueY.value}[/]';
-  candlestick.name = 'candlestick';
 
   chart.data = candleData;
 
@@ -80,11 +84,13 @@ function addCandlestick(chart) {
 
 function addLineSample(chart) {
   const lineSample = chart.series.push(new am4charts.LineSeries());
+  lineSample.name = 'EMA';
   lineSample.dataFields.dateX = 'value';
   lineSample.dataFields.valueY = 'value2';
   lineSample.strokeWidth = 2
   lineSample.stroke = chart.colors.getIndex(3);
   lineSample.strokeOpacity = 0.7;
+  lineSample.tooltipText = "{valueY}";
   lineSample.data = [
     { 'value': '2018-08-05', 'value2': 140 },
     { 'value': '2018-08-26', 'value2': 170 }
@@ -93,24 +99,31 @@ function addLineSample(chart) {
 
 function addScatterSample(chart) {
   const lineSample = chart.series.push(new am4charts.LineSeries());
+  lineSample.name = 'Entry';
   lineSample.dataFields.dateX = 'value';
   lineSample.dataFields.valueY = 'value2';
-  lineSample.strokeWidth = 2
-  lineSample.stroke = chart.colors.getIndex(3);
+  // lineSample.strokeWidth = 2
+  // lineSample.stroke = chart.colors.getIndex(3);
   lineSample.strokeOpacity = 0.0;
+  lineSample.tooltipText = "{valueY}";
   lineSample.data = [
     { 'value': '2018-08-08', 'value2': 140 },
     { 'value': '2018-09-03', 'value2': 150 }
   ];
+  addBullet(chart, lineSample);
+}
 
-  // Add a bullet
+function addBullet(chart, lineSample) {
   let bullet = lineSample.bullets.push(new am4charts.Bullet());
   // Add a triangle to act as am arrow
   let arrow = bullet.createChild(am4core.Triangle);
   arrow.horizontalCenter = "middle";
   arrow.verticalCenter = "middle";
-  arrow.strokeWidth = 0;
+  arrow.stroke = am4core.color("#2F4858");
+  arrow.strokeWidth = 1;
+  arrow.strokeOpacity = 0.8;
   arrow.fill = chart.colors.getIndex(0);
+  arrow.fillOpacity = 0.5;
   arrow.direction = "top";
   arrow.width = 12;
   arrow.height = 12;
