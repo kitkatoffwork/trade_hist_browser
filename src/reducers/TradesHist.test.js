@@ -1,6 +1,6 @@
-import reducer from './SampleRequesting';
+import reducer from './TradesHist';
 
-describe('SampleRequesting Reducer', () => {
+describe('TradesHist Reducer', () => {
   const initialState = { pareName: '', data: 'undefined', error: false }
   test('初期値', () => {
     const state = undefined;

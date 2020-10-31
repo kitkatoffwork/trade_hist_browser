@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
-import SampleRequesting from '../components/SampleRequesting';
-import * as actions from '../actions/SampleRequesting';
+import TradesHist from '../components/TradesHist';
+import * as actions from '../actions/TradesHist';
 
 const mapStateToProps = (state, ownProps) => ({
   pareName: ownProps.pareName,
@@ -15,6 +15,9 @@ const mapDispatchToProps = (dispatch) => ({
   onUpdate(pareName) {
     dispatch(actions.requestHist(pareName));
   },
+  // request(pareName) {
+  //   dispatch(actions.requestHist(pareName));
+  // },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SampleRequesting);
+export default connect(mapStateToProps, mapDispatchToProps)(TradesHist);
