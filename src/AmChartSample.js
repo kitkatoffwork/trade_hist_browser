@@ -90,7 +90,7 @@ function addLineSample(chart) {
   lineSample.strokeWidth = 2
   lineSample.stroke = chart.colors.getIndex(3);
   lineSample.strokeOpacity = 0.7;
-  lineSample.tooltipText = "{valueY}";
+  lineSample.tooltipText = "sample: {valueY}";
   lineSample.data = [
     { 'value': '2018-08-05', 'value2': 140 },
     { 'value': '2018-08-26', 'value2': 170 }
