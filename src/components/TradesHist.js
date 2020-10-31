@@ -2,7 +2,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import CandleChart from './candle_chart';
 
-export default class SampleRequesting extends React.Component {
+export default class TradesHist extends React.Component {
+  // INFO: 画面初期描画と同時にグラフも描画する場合はこれをコメントイン
   componentDidMount() {
     this.props.onMount(this.props.pareName);
   }
@@ -17,7 +18,7 @@ export default class SampleRequesting extends React.Component {
     const { pareName, data, error } = this.props;
     return (
       <>
-        <h2>SampleRequesting Component</h2>
+        <h2>TradesHist Component</h2>
         <p>Pare Name: {pareName}</p>
 
         {(() => {
@@ -61,8 +62,8 @@ export default class SampleRequesting extends React.Component {
   }
 }
 
-SampleRequesting.propTypes = {
-  onMount: PropTypes.func.isRequired,
+TradesHist.propTypes = {
+  // onMount: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
   pareName: PropTypes.string.isRequired,
   data: PropTypes.oneOfType([
