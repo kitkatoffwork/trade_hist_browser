@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  FormControl, Select, InputLabel, MenuItem,
+  FormControl, Select, InputLabel,
 } from '@material-ui/core';
 
 class PairSelect extends Component {
@@ -30,9 +30,7 @@ class PairSelect extends Component {
             native
             value={this.state.selectedPair}
             onChange={this.PairChange}
-            label="Pair"
             inputProps={{
-              name: 'Pair',
               id: 'outlined-age-native-simple',
             }}
           >

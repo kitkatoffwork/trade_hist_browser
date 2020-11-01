@@ -1,5 +1,9 @@
 const API_URL = 'https://ft30m5906e.execute-api.us-east-2.amazonaws.com/default/tradehist'
 
+export const selectPair = (pareName) => ({
+  type: 'SELECT_PAIR',
+  payload: { pareName }
+});
 const request = (pareName) => ({
   type: 'REQUEST',
   payload: { pareName }
@@ -19,7 +23,7 @@ export const requestHist = (pareName) => {
 
     try {
       const response = await fetch(
-        API_URL + '?hoge=123', {
+        API_URL + `?pareName=${pareName}`, {
           // headers: {'Content-Type': 'application/json'},
           // method: 'POST',
           // body: JSON.stringify({aa: 'dwa', bere: 13456})

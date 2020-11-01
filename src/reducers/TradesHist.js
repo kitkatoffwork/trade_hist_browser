@@ -10,6 +10,11 @@ const initialState = {
 
 export default function requestReducer(state = initialState, action) {
   switch (action.type) {
+    case 'SELECT_PAIR':
+      return {
+        ...state,
+        pareName: action.payload.pareName,
+      };
     case 'REQUEST':
       return {
         pareName: action.payload.pareName,
