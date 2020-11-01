@@ -62,7 +62,7 @@ class TradesHist extends React.Component {
                     </TableHead>
                     <TableBody>
                       {data.map( (datum, i) => (
-                        <TableRow key={i}>
+                        <TableRow key={`candle-${i}`}>
                           <TableCell>{datum.time}</TableCell>
                           <TableCell>{datum.open}</TableCell>
                           <TableCell>{datum.high}</TableCell>
