@@ -9,15 +9,15 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onMount(pareName) {
-    dispatch(actions.requestHist(pareName));
-  },
+  // onMount(pareName) {
+  //   dispatch(actions.requestHist(pareName));
+  // },
   onUpdate(pareName) {
     dispatch(actions.requestHist(pareName));
   },
-  // request(pareName) {
-  //   dispatch(actions.requestHist(pareName));
-  // },
+  request(pareName) {
+    dispatch(actions.requestHist(pareName));
+  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TradesHist);

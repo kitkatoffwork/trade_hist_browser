@@ -1,12 +1,25 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+// import { makeStyles } from '@material-ui/core/styles';
+import {
+  withStyles,
+  Button,
+  // Card, CardActions, CardContent,
+  // Select, InputLabel, MenuItem,
+  Paper,
+  Table, TableContainer, TableHead, TableBody, TableRow, TableCell
+} from '@material-ui/core';
+
 import CandleChart from './candle_chart';
 
-export default class TradesHist extends React.Component {
+const styles = theme => ({
+  container: { maxHeight: 300, },
+});
+class TradesHist extends React.Component {
   // INFO: 画面初期描画と同時にグラフも描画する場合はこれをコメントイン
-  componentDidMount() {
-    this.props.onMount(this.props.pareName);
-  }
+  // componentDidMount() {
+  //   this.props.onMount(this.props.pareName);
+  // }
   /* この componentDidUpdate をコメントアウトしても、少なくとも初回は request が飛んでいる */
   componentDidUpdate(nextProps) {
     if (this.props.pareName !== nextProps.pareName) {
@@ -15,11 +28,17 @@ export default class TradesHist extends React.Component {
   }
 
   render() {
-    const { pareName, data, error } = this.props;
+    const {
+      classes,
+      request,
+      pareName, data, error
+    } = this.props;
+
     return (
       <>
         <h2>TradesHist Component</h2>
         <p>Pare Name: {pareName}</p>
+        <Button size="small" color="primary" variant="contained" onClick={() => request(pareName)}>Learn More</Button>
 
         {(() => {
           if (error) {
@@ -30,28 +49,30 @@ export default class TradesHist extends React.Component {
             return(
               <>
                 <CandleChart candles={data.slice(-400)} />
-                <table>
-                  <thead>
-                    <tr>
-                      <th>time</th>
-                      <th>open</th>
-                      <th>high</th>
-                      <th>low</th>
-                      <th>close</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {data.map( (datum, i) => (
-                      <tr key={i}>
-                        <td>{datum.time}</td>
-                        <td>{datum.open}</td>
-                        <td>{datum.high}</td>
-                        <td>{datum.low}</td>
-                        <td>{datum.close}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                <TableContainer className={classes.container} component={Paper}>
+                  <Table stickyHeader size="small">
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>time</TableCell>
+                        <TableCell>open</TableCell>
+                        <TableCell>high</TableCell>
+                        <TableCell>low</TableCell>
+                        <TableCell>close</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {data.map( (datum, i) => (
+                        <TableRow key={i}>
+                          <TableCell>{datum.time}</TableCell>
+                          <TableCell>{datum.open}</TableCell>
+                          <TableCell>{datum.high}</TableCell>
+                          <TableCell>{datum.low}</TableCell>
+                          <TableCell>{datum.close}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
               </>
             );
           }
@@ -61,6 +82,8 @@ export default class TradesHist extends React.Component {
     )
   }
 }
+
+export default withStyles(styles, )(TradesHist);
 
 TradesHist.propTypes = {
   // onMount: PropTypes.func.isRequired,

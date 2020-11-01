@@ -34,7 +34,7 @@ class PairSelect extends Component {
           <MenuItem value="EUR_USD">EUR_USD</MenuItem>
           <MenuItem value="GBP_JPY">GBP_JPY</MenuItem>
         </Select> */}
-        <button　onClick={this.addButtonClick} >Request Histroy</button>
+        <button onClick={this.addButtonClick} >Request Histroy</button>
       </FormControl>
     )
   }

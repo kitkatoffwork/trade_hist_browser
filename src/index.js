@@ -30,7 +30,7 @@ function renderApp(store) {
           <Route exact path="/" component={App} />
           <Route exact path="/task" component={TasksApp} />
           <Route
-            exact path="/request"
+            exact path="/tradesHist"
             render={() => <TradesHist pareName="USD_JPY" />}
           />
         </Switch>
