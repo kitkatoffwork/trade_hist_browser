@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
-import Demo from './Demo';
-import AmChartSample from './AmChartSample';
-import PairSelect from './PairSelect';
-import History from './History';
+import Demo from './templates/Demo';
+import AmChartSample from './templates/AmChartSample';
+import PairSelect from './templates/PairSelect';
+import SampleList from './templates/SampleList';
 
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
@@ -42,8 +42,7 @@ class App extends Component {
       <>
         <Container> {/*maxWidth="sm"*/}
           <PairSelect addPair={this.addPair} />
-          <History pairs={this.state.pairs}/>
-          {/* <Form name = 'なまえ' /> */}
+          <SampleList pairs={this.state.pairs}/>
           <Button onClick={this.resetPairs} >Clear</Button>
         </Container>
         <AmChartSample />
