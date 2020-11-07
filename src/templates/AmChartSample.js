@@ -111,7 +111,7 @@ function addScatterSample(chart) {
   lineSample.tooltipText = "{valueY}";
   lineSample.data = [
     { 'value': '2018-08-08', 'value2': 140 },
-    { 'value': '2018-09-03', 'value2': 150 }
+    { 'value': '2018-09-03', 'value2': 142 }
   ];
   addBullet(chart, lineSample);
 }
@@ -121,8 +121,6 @@ function addReverseScatter(chart) {
   lineSample.name = 'Short';
   lineSample.dataFields.dateX = 'value';
   lineSample.dataFields.valueY = 'value2';
-  // lineSample.strokeWidth = 2
-  // lineSample.stroke = chart.colors.getIndex(3);
   lineSample.strokeOpacity = 0.0;
   lineSample.tooltipText = "{valueY}";
   lineSample.data = [
@@ -138,8 +136,6 @@ function addDiamondScatter(chart) {
   lineSample.name = 'Close';
   lineSample.dataFields.dateX = 'value';
   lineSample.dataFields.valueY = 'value2';
-  // lineSample.strokeWidth = 2
-  // lineSample.stroke = chart.colors.getIndex(3);
   lineSample.strokeOpacity = 0.0;
   lineSample.tooltipText = "{valueY}";
   lineSample.data = [
@@ -156,11 +152,8 @@ function addBullet(chart, lineSample) {
   arrow.horizontalCenter = "middle";
   arrow.verticalCenter = "middle";
   arrow.stroke = am4core.color('white');
-  // arrow.stroke = chart.colors.getIndex(50);
-  arrow.strokeWidth = 1;
-  arrow.strokeOpacity = 1.0;
+  arrow.strokeWidth = 1.5;
   arrow.fill = chart.colors.getIndex(16);
-  arrow.fillOpacity = 1.0;
   arrow.direction = "top";
   arrow.width = 10;
   arrow.height = 10;
@@ -170,11 +163,8 @@ function addReverseBullet(chart, lineSample) {
   let bullet = lineSample.bullets.push(new am4charts.Bullet());
   // Add a reverse triangle to act as an arrow
   let arrow = bullet.createChild(am4core.Triangle);
-  arrow.horizontalCenter = "middle";
-  arrow.verticalCenter = "middle";
   arrow.stroke = am4core.color('white');
-  // arrow.stroke = chart.colors.getIndex(50);
-  arrow.strokeWidth = 1;
+  arrow.strokeWidth = 1.5;
   arrow.fill = chart.colors.getIndex(16);
   arrow.direction = "bottom";
   arrow.width = 10;
@@ -185,9 +175,8 @@ function addDiamondBullet(chart, lineSample) {
   let bullet = lineSample.bullets.push(new am4plugins_bullets.ShapeBullet());
   // Add a diamond
   bullet.shape = 'diamond';
-
   bullet.stroke = am4core.color('white');
-  bullet.strokeWidth = 1;
+  bullet.strokeWidth = 1.5;
   bullet.fill = am4core.color('red');
   bullet.width = 8;
   bullet.height = 8;
