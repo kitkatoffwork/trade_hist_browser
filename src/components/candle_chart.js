@@ -91,7 +91,7 @@ class CandleChart extends Component {
 
   render() {
     return (
-      <div id='chartdiv' style={{ width: '90%', height: '500px' }}></div>
+      <div id='chartdiv' style={{ height: '500px' }}></div>
     );
   }
 }

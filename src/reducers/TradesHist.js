@@ -1,7 +1,15 @@
+const statuses = {
+  blank: 0,
+  loading: 1,
+  success: 2,
+  error: 99
+}
+
 const initialState = {
-  pareName: '',
-  data: 'undefined',
-  error: false
+  pareName: 'USD_JPY',
+  status: statuses.blank,
+  data: [],
+  errorMsg: '',
 }
 
 /* const extractData = response => {
@@ -17,14 +25,15 @@ export default function requestReducer(state = initialState, action) {
       };
     case 'REQUEST':
       return {
+        ...state,
         pareName: action.payload.pareName,
-        data: 'undefined',
-        error: false
+        status: statuses.loading,
+        data: [],
       };
     case 'RECEIVE_RESPONSE':
-      return action.payload.error
-        ? { ...state, error: true }
-        : { ...state, data: action.payload.response };
+      return action.payload.errorMsg
+        ? { ...state, status: statuses.error, errorMsg: action.payload.errorMsg }
+        : { ...state, status: statuses.success, data: action.payload.response };
     case 'FINISH_REQUEST':
       return {
         ...state,

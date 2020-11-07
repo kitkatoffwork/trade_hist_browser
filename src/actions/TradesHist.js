@@ -8,9 +8,9 @@ const request = (pareName) => ({
   type: 'REQUEST',
   payload: { pareName }
 });
-const receiveData = (pareName, error, response) => ({
+const receiveData = (pareName, errorMsg, response) => ({
   type: 'RECEIVE_RESPONSE',
-  payload: { pareName, error, response }
+  payload: { pareName, errorMsg, response }
 });
 const finishRequest = (pareName) => ({
   type: 'FINISH_REQUEST',
@@ -30,10 +30,17 @@ export const requestHist = (pareName) => {
         }
       );
       const data = await response.json();
-      dispatch(receiveData(pareName, null, data));
+      const status = await response.status;
+
+      if (status === 200) {
+        dispatch(receiveData(pareName, null, data));
+      } else {
+        dispatch(receiveData(pareName, data.message));
+      }
     } catch (error) {
-      dispatch(receiveData(pareName, error));
+      dispatch(receiveData(pareName, error.message));
+    } finally {
+      dispatch(finishRequest(pareName));
     }
-    dispatch(finishRequest(pareName));
   };
 };

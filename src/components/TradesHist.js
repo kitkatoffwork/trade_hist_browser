@@ -3,7 +3,9 @@ import React from 'react';
 // import { makeStyles } from '@material-ui/core/styles';
 import {
   withStyles,
+  Container,
   Button,
+  CircularProgress,
   Card, CardActions, CardContent,
   FormControl, Select, InputLabel,
   Paper, Table, TableContainer, TableHead, TableBody, TableRow, TableCell
@@ -39,97 +41,110 @@ class TradesHist extends React.Component {
     const {
       classes,
       selectPair, request,
-      pareName, data, error
+      pareName, status, data, errorMsg
     } = this.props;
 
     return (
-      <>
+      <Container>
         <h2>TradesHist Component</h2>
         <p>Pare Name: {pareName}</p>
 
         <FormControl size="small" variant="outlined" className={classes.formControl}>
           <InputLabel htmlFor="outlined-age-native-simple">Pair</InputLabel>
-            <Select
-              native
-              value={pareName}
-              onChange={(e) => selectPair(e.target.value)}
-              label="Pair"
-              inputProps={{
-                id: 'outlined-age-native-simple',
-              }}
-            >
-              <option aria-label="None" value="" />
-              <option value="USD_JPY">USD_JPY</option>
-              <option value="EUR_USD">EUR_USD</option>
-              <option value="GBP_JPY">GBP_JPY</option>
-            </Select>
-          <Button size="small" color="primary" variant="contained" onClick={() => request(pareName)}>Load Hist</Button>
+          <Select
+            native
+            value={pareName}
+            onChange={(e) => selectPair(e.target.value)}
+            label="Pair"
+            inputProps={{
+              id: 'outlined-age-native-simple',
+            }}
+          >
+            <option aria-label="None" value="" />
+            <option value="USD_JPY">USD_JPY</option>
+            <option value="EUR_USD">EUR_USD</option>
+            <option value="GBP_JPY">GBP_JPY</option>
+          </Select>
         </FormControl>
+        <Button size="small"
+                color="primary"
+                variant="contained"
+                onClick={() => request(pareName)} disabled={status === 1}>
+          Load Hist
+        </Button>
 
-        {(() => {
-          if (error) {
-            return <p>エラーが発生しました。リロードして下さい。</p>
-          } else if (data === 'undefined') {
-            return <p>Now Loading ...</p>
-          } else {
-            return(
-              <>
-                <CandleChart candles={data.slice(-400)} />
-                <Card variant="outlined">
-                  <CardContent>
-                    <TableContainer className={classes.container} component={Paper}>
-                      <Table stickyHeader size="small">
-                        <TableHead>
-                          <TableRow>
-                            <TableCell>time</TableCell>
-                            <TableCell>open</TableCell>
-                            <TableCell>high</TableCell>
-                            <TableCell>low</TableCell>
-                            <TableCell>close</TableCell>
-                          </TableRow>
-                        </TableHead>
-                        <TableBody>
-                          {data.map( (datum, i) => (
-                            <TableRow key={`candle-${i}`}>
-                              <TableCell>{datum.time}</TableCell>
-                              <TableCell>{datum.open}</TableCell>
-                              <TableCell>{datum.high}</TableCell>
-                              <TableCell>{datum.low}</TableCell>
-                              <TableCell>{datum.close}</TableCell>
-                            </TableRow>
-                          ))}
-                        </TableBody>
-                      </Table>
-                    </TableContainer>
-                  </CardContent>
-                  <CardActions>
-                    <Button size="small">Learn More</Button>
-                  </CardActions>
-                </Card>
-              </>
-            );
-          }
-        })()}
-
-      </>
+        <Card variant="outlined">
+          {(this.renderHistTable)(classes, status, data, errorMsg)}
+        </Card>
+      </Container>
     )
+  }
+
+  renderHistTable (classes, status, data, errorMsg) {
+    if (status === 99) {
+      return <p>Error: {errorMsg}</p>
+    } else if (status === 0) {
+      return null
+    } else if (status === 1) {
+      return <><CircularProgress />Now Loading ...</>
+    } else if (status === 2) {
+      return(
+        <>
+          <CandleChart candles={data.slice(-400)} />
+          <CardContent>
+            <TableContainer className={classes.container} component={Paper}>
+              <Table stickyHeader size="small">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>time</TableCell>
+                    <TableCell>open</TableCell>
+                    <TableCell>high</TableCell>
+                    <TableCell>low</TableCell>
+                    <TableCell>close</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {data.map( (datum, i) => (
+                    <TableRow key={`candle-${i}`}>
+                      <TableCell>{datum.time}</TableCell>
+                      <TableCell>{datum.open}</TableCell>
+                      <TableCell>{datum.high}</TableCell>
+                      <TableCell>{datum.low}</TableCell>
+                      <TableCell>{datum.close}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </CardContent>
+          <CardActions>
+            <Button size="small">Learn More</Button>
+          </CardActions>
+        </>
+      );
+    }
   }
 }
 
 export default withStyles(styles, )(TradesHist);
 
 TradesHist.propTypes = {
+  classes: PropTypes.object.isRequired,
   // onMount: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
+  selectPair: PropTypes.func.isRequired,
+  request: PropTypes.func.isRequired,
   pareName: PropTypes.string.isRequired,
-  data: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.arrayOf(
-      PropTypes.shape({
-        hoge: PropTypes.number,
-        huga: PropTypes.number,
-      })
-    )
-  ]),
-  error: PropTypes.bool.isRequired
+  status: PropTypes.number.isRequired,
+  data: PropTypes.array.isRequired,
+  errorMsg: PropTypes.string.isRequired,
+  // data: PropTypes.oneOfType([
+  //   PropTypes.string,
+  //   PropTypes.arrayOf(
+  //     PropTypes.shape({
+  //       hoge: PropTypes.number,
+  //       huga: PropTypes.bool,
+  //     })
+  //   )
+  // ]),
 };
