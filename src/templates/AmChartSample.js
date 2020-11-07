@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import * as am4core from '@amcharts/amcharts4/core';
 import * as am4charts from '@amcharts/amcharts4/charts';
+import * as am4plugins_bullets from '@amcharts/amcharts4/plugins/bullets';
 import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 
 am4core.useTheme(am4themes_animated);
@@ -27,7 +28,7 @@ class AmChartSample extends Component {
 
   render() {
     return (
-      <div id='chartdiv' style={{ width: '100%', height: '500px' }}></div>
+      <div id='chartdiv' style={{ height: '500px' }}></div>
     );
   }
 }
@@ -56,7 +57,9 @@ function prepareChart() {
 
   const candlestick = addCandlestick(chart)
   addLineSample(chart);
-  addScatterSample(chart)
+  addScatterSample(chart);
+  addReverseScatter(chart);
+  addDiamondScatter(chart);
 
   const scrollbarX = new am4charts.XYChartScrollbar();
   scrollbarX.series.push(candlestick);
@@ -99,7 +102,7 @@ function addLineSample(chart) {
 
 function addScatterSample(chart) {
   const lineSample = chart.series.push(new am4charts.LineSeries());
-  lineSample.name = 'Entry';
+  lineSample.name = 'Long';
   lineSample.dataFields.dateX = 'value';
   lineSample.dataFields.valueY = 'value2';
   // lineSample.strokeWidth = 2
@@ -113,20 +116,81 @@ function addScatterSample(chart) {
   addBullet(chart, lineSample);
 }
 
+function addReverseScatter(chart) {
+  const lineSample = chart.series.push(new am4charts.LineSeries());
+  lineSample.name = 'Short';
+  lineSample.dataFields.dateX = 'value';
+  lineSample.dataFields.valueY = 'value2';
+  // lineSample.strokeWidth = 2
+  // lineSample.stroke = chart.colors.getIndex(3);
+  lineSample.strokeOpacity = 0.0;
+  lineSample.tooltipText = "{valueY}";
+  lineSample.data = [
+    { 'value': '2018-08-09', 'value2': 130 },
+    { 'value': '2018-09-04', 'value2': 160 }
+  ];
+  addReverseBullet(chart, lineSample);
+}
+
+
+function addDiamondScatter(chart) {
+  const lineSample = chart.series.push(new am4charts.LineSeries());
+  lineSample.name = 'Close';
+  lineSample.dataFields.dateX = 'value';
+  lineSample.dataFields.valueY = 'value2';
+  // lineSample.strokeWidth = 2
+  // lineSample.stroke = chart.colors.getIndex(3);
+  lineSample.strokeOpacity = 0.0;
+  lineSample.tooltipText = "{valueY}";
+  lineSample.data = [
+    { 'value': '2018-08-10', 'value2': 135 },
+    { 'value': '2018-09-06', 'value2': 155 }
+  ];
+  addDiamondBullet(chart, lineSample);
+}
+
 function addBullet(chart, lineSample) {
   let bullet = lineSample.bullets.push(new am4charts.Bullet());
-  // Add a triangle to act as am arrow
+  // Add a triangle to act as an arrow
   let arrow = bullet.createChild(am4core.Triangle);
   arrow.horizontalCenter = "middle";
   arrow.verticalCenter = "middle";
-  arrow.stroke = am4core.color("#2F4858");
+  arrow.stroke = am4core.color('white');
+  // arrow.stroke = chart.colors.getIndex(50);
   arrow.strokeWidth = 1;
-  arrow.strokeOpacity = 0.8;
-  arrow.fill = chart.colors.getIndex(0);
-  arrow.fillOpacity = 0.5;
+  arrow.strokeOpacity = 1.0;
+  arrow.fill = chart.colors.getIndex(16);
+  arrow.fillOpacity = 1.0;
   arrow.direction = "top";
-  arrow.width = 12;
-  arrow.height = 12;
+  arrow.width = 10;
+  arrow.height = 10;
+}
+
+function addReverseBullet(chart, lineSample) {
+  let bullet = lineSample.bullets.push(new am4charts.Bullet());
+  // Add a reverse triangle to act as an arrow
+  let arrow = bullet.createChild(am4core.Triangle);
+  arrow.horizontalCenter = "middle";
+  arrow.verticalCenter = "middle";
+  arrow.stroke = am4core.color('white');
+  // arrow.stroke = chart.colors.getIndex(50);
+  arrow.strokeWidth = 1;
+  arrow.fill = chart.colors.getIndex(16);
+  arrow.direction = "bottom";
+  arrow.width = 10;
+  arrow.height = 10;
+}
+
+function addDiamondBullet(chart, lineSample) {
+  let bullet = lineSample.bullets.push(new am4plugins_bullets.ShapeBullet());
+  // Add a diamond
+  bullet.shape = 'diamond';
+
+  bullet.stroke = am4core.color('white');
+  bullet.strokeWidth = 1;
+  bullet.fill = am4core.color('red');
+  bullet.width = 8;
+  bullet.height = 8;
 }
 
 const candleData = [{
