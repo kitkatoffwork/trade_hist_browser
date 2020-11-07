@@ -12,12 +12,14 @@ export default class Header extends Component {
     return(
       <AppBar position="static">
         <Toolbar>
-          <Typography>サンプルページ</Typography>
+          <Typography>
+            <Link to="/">サンプルページ</Link>
+          </Typography>
           <Button color="inherit">
             <Link to="/task">TODO MEMO</Link>
           </Button>
           <Button color="inherit">
-            <Link to="/request">Request page</Link>
+            <Link to="/tradesHist">Trades Hist</Link>
           </Button>
         </Toolbar>
       </AppBar>
