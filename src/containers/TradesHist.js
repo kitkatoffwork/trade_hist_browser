@@ -5,8 +5,9 @@ import * as actions from '../actions/TradesHist';
 const mapStateToProps = (state, ownProps) => ({
   // pareName: ownProps.pareName,
   pareName: state.requestReducer.pareName,
+  status: state.requestReducer.status,
   data: state.requestReducer.data,
-  error: state.requestReducer.error
+  errorMsg: state.requestReducer.errorMsg
 });
 
 const mapDispatchToProps = (dispatch) => ({
