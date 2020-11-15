@@ -6,13 +6,13 @@ export default function PareSelector(props) {
     <FormControl size="small" variant="outlined" className={props.className}>
       <InputLabel htmlFor="outlined-age-native-simple">Pair</InputLabel>
       <Select
-        native
-        value={props.value}
-        onChange={props.onChangeCallback}
-        label="Pair"
         inputProps={{
           id: 'outlined-age-native-simple',
         }}
+        label="Pair"
+        native
+        onChange={props.onChangeCallback}
+        value={props.value}
       >
         <option aria-label="None" value="" />
         <option value="USD_JPY">USD_JPY</option>
