@@ -7,10 +7,10 @@ import {
   Button,
   CircularProgress,
   Card, CardActions, CardContent,
-  FormControl, Select, InputLabel,
   Paper, Table, TableContainer, TableHead, TableBody, TableRow, TableCell
 } from '@material-ui/core';
 
+import PareSelector from '../templates/PareSelector'
 import CandleChart from './candle_chart';
 
 const styles = theme => ({
@@ -49,23 +49,9 @@ class TradesHist extends React.Component {
         <h2>TradesHist Component</h2>
         <p>Pare Name: {pareName}</p>
 
-        <FormControl size="small" variant="outlined" className={classes.formControl}>
-          <InputLabel htmlFor="outlined-age-native-simple">Pair</InputLabel>
-          <Select
-            native
-            value={pareName}
-            onChange={(e) => selectPair(e.target.value)}
-            label="Pair"
-            inputProps={{
-              id: 'outlined-age-native-simple',
-            }}
-          >
-            <option aria-label="None" value="" />
-            <option value="USD_JPY">USD_JPY</option>
-            <option value="EUR_USD">EUR_USD</option>
-            <option value="GBP_JPY">GBP_JPY</option>
-          </Select>
-        </FormControl>
+        <PareSelector className={classes.formControl}
+                      value={pareName}
+                      onChangeCallback={(e) => selectPair(e.target.value)} />
         <Button size="small"
                 color="primary"
                 variant="contained"
