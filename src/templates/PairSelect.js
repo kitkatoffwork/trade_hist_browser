@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import {
-  FormControl, Select, InputLabel,
-} from '@material-ui/core';
+import { FormControl } from '@material-ui/core';
+
+import PareSelector from '../templates/PareSelector'
 
 class PairSelect extends Component {
   constructor(props) {
@@ -24,22 +24,9 @@ class PairSelect extends Component {
   render() {
     return (
       <>
-        <FormControl size="small" variant="outlined">
-          <InputLabel htmlFor="outlined-age-native-simple">Pair</InputLabel>
-          <Select
-            native
-            value={this.state.selectedPair}
-            onChange={this.PairChange}
-            inputProps={{
-              id: 'outlined-age-native-simple',
-            }}
-          >
-            <option aria-label="None" value="" />
-            <option value="USD_JPY">USD_JPY</option>
-            <option value="EUR_USD">EUR_USD</option>
-            <option value="GBP_JPY">GBP_JPY</option>
-          </Select>
+        <PareSelector className={''} value={this.state.selectedPair} onChangeCallback={this.PairChange} />
 
+        <FormControl size="small" variant="outlined">
           <select id="select" value={this.state.selectedPair} onChange={this.PairChange} >
             <option value=''>Select Pair</option>
             <option value="USD_JPY">USD_JPY</option>
