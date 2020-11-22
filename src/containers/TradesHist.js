@@ -5,6 +5,7 @@ import * as actions from '../actions/TradesHist';
 const mapStateToProps = (state, ownProps) => ({
   // pareName: ownProps.pareName,
   pareName: state.requestReducer.pareName,
+  fromDatetime: state.requestReducer.fromDatetime,
   status: state.requestReducer.status,
   data: state.requestReducer.data,
   errorMsg: state.requestReducer.errorMsg
@@ -20,8 +21,11 @@ const mapDispatchToProps = (dispatch) => ({
   selectPair(pairName) {
     dispatch(actions.selectPair(pairName));
   },
-  request(pareName) {
-    dispatch(actions.requestHist(pareName));
+  setFromDatetime(fromDatetime) {
+    dispatch(actions.setFromDatetime(fromDatetime));
+  },
+  request(pareName, fromDatetime) {
+    dispatch(actions.requestHist(pareName, fromDatetime));
   },
 });
 

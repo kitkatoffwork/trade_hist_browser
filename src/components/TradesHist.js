@@ -11,6 +11,7 @@ import {
 } from '@material-ui/core';
 
 import PareSelector from '../templates/PareSelector'
+import PastDatePicker from '../templates/PastDatePicker'
 import CandleChart from './candle_chart';
 
 const styles = theme => ({
@@ -18,10 +19,10 @@ const styles = theme => ({
     maxHeight: 300,
     margin: theme.spacing(1),
   },
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
-  },
+  // formControl: {
+  //   margin: theme.spacing(1),
+  //   minWidth: 120,
+  // },
 });
 
 class TradesHist extends React.Component {
@@ -40,8 +41,8 @@ class TradesHist extends React.Component {
   render() {
     const {
       classes,
-      selectPair, request,
-      pareName, status, data, errorMsg
+      selectPair, setFromDatetime, request,
+      pareName, fromDatetime, status, data, errorMsg
     } = this.props;
 
     return (
@@ -49,13 +50,15 @@ class TradesHist extends React.Component {
         <h2>TradesHist Component</h2>
         <p>Pare Name: {pareName}</p>
 
-        <PareSelector className={classes.formControl}
-                      value={pareName}
+        {/* </Container><FormControl size="small" variant="outlined" className={props.className}> */}
+        <PareSelector value={pareName}
                       onChangeCallback={(e) => selectPair(e.target.value)} />
+        <PastDatePicker value={fromDatetime}
+                        onChangeCallback={(date, _event) => setFromDatetime(date)} />
         <Button size="small"
                 color="primary"
                 variant="contained"
-                onClick={() => request(pareName)} disabled={status === 1}>
+                onClick={() => request(pareName, fromDatetime)} disabled={status === 1}>
           Load Hist
         </Button>
 
@@ -121,6 +124,7 @@ TradesHist.propTypes = {
   selectPair: PropTypes.func.isRequired,
   request: PropTypes.func.isRequired,
   pareName: PropTypes.string.isRequired,
+  fromDatetime: PropTypes.object.isRequired,
   status: PropTypes.number.isRequired,
   data: PropTypes.array.isRequired,
   errorMsg: PropTypes.string.isRequired,
