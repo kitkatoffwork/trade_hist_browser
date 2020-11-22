@@ -14,14 +14,14 @@ export default function PastDatePicker(props) {
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <DatePicker
-        // ampm={false}
+        /* ampm={false} */
         autoOk={true}
         disableFuture
-        // disableToolbar
+        /* disableToolbar */
         format="yyyy/MM/dd"
         label="FROM"
         onChange={props.onChangeCallback}
-        onError={console.log}
+        /* onError={console.log} */
         openTo="month"
         value={props.value}
         variant="inline"

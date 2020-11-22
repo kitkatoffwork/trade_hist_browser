@@ -1,9 +1,9 @@
 import React from 'react';
-import { FormControl, InputLabel, Select, } from '@material-ui/core';
+import { InputLabel, Select, } from '@material-ui/core';
 
 export default function PareSelector(props) {
   return (
-    <FormControl size="small" variant="outlined" className={props.className}>
+    <>
       <InputLabel htmlFor="outlined-age-native-simple">Pair</InputLabel>
       <Select
         inputProps={{
@@ -19,6 +19,6 @@ export default function PareSelector(props) {
         <option value="EUR_USD">EUR_USD</option>
         <option value="GBP_JPY">GBP_JPY</option>
       </Select>
-    </FormControl>
+    </>
   )
 }

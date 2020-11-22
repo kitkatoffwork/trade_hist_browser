@@ -30,24 +30,21 @@ class PairSelect extends Component {
 
   render() {
     return (
-      <>
-        <FormControl>
-          <PareSelector className={''}
-                        onChangeCallback={this.PairChange}
-                        value={this.state.selectedPair} />
-          <PastDatePicker onChangeCallback={this.handleDateChange}
-                          value={this.state.selectedDate} />
+      <FormControl size="small" variant="outlined">
+        <PareSelector onChangeCallback={this.PairChange}
+                      value={this.state.selectedPair} />
+        <PastDatePicker onChangeCallback={this.handleDateChange}
+                        value={this.state.selectedDate} />
 
-          <input disabled value={this.state.selectedDate} />
-          <select id="select" value={this.state.selectedPair} onChange={this.PairChange} >
-            <option value=''>Select Pair</option>
-            <option value="USD_JPY">USD_JPY</option>
-            <option value="EUR_USD">EUR_USD</option>
-            <option value="GBP_JPY">GBP_JPY</option>
-          </select>
-          <button onClick={this.addButtonClick} >Request Histroy</button>
-        </FormControl>
-      </>
+        <input disabled value={this.state.selectedDate} />
+        <select id="select" value={this.state.selectedPair} onChange={this.PairChange} >
+          <option value=''>Select Pair</option>
+          <option value="USD_JPY">USD_JPY</option>
+          <option value="EUR_USD">EUR_USD</option>
+          <option value="GBP_JPY">GBP_JPY</option>
+        </select>
+        <button onClick={this.addButtonClick} >Request Histroy</button>
+      </FormControl>
     )
   }
 }
