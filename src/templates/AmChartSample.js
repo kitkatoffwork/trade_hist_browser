@@ -12,8 +12,11 @@ am4core.useTheme(am4themes_animated);
 // https://www.amcharts.com/demos/duration-on-value-axis/
 // https://www.amcharts.com/demos/stock-chart-candlesticks/
 // https://www.amcharts.com/demos/scatter-chart/
+// https://www.amcharts.com/demos/professional-candlesticks/
 // https://www.amcharts.com/docs/v4/concepts/bullets/
 // https://www.amcharts.com/docs/v4/getting-started/integrations/using-react/
+// INFO: How to add vertical line at the specified point of xAxis
+// https://www.amcharts.com/demos/step-count-chart/
 
 class AmChartSample extends Component {
   componentDidMount() {
