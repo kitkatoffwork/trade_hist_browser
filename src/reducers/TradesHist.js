@@ -7,14 +7,11 @@ const statuses = {
 
 const initialState = {
   pareName: 'USD_JPY',
+  fromDatetime: new Date(),
   status: statuses.blank,
   data: [],
   errorMsg: '',
 }
-
-/* const extractData = response => {
-  return JSON.parse(response.body);
-} */
 
 export default function requestReducer(state = initialState, action) {
   switch (action.type) {
@@ -23,10 +20,14 @@ export default function requestReducer(state = initialState, action) {
         ...state,
         pareName: action.payload.pareName,
       };
+    case 'SET_FROM_DATETIME':
+      return {
+        ...state,
+        fromDatetime: action.payload.fromDatetime,
+      };
     case 'REQUEST':
       return {
         ...state,
-        pareName: action.payload.pareName,
         status: statuses.loading,
         data: [],
       };

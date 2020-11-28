@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
-import {
-  FormControl, Select, InputLabel,
-} from '@material-ui/core';
+import { FormControl, } from '@material-ui/core';
+
+import PareSelector from '../templates/PareSelector'
+import PastDatePicker from '../templates/PastDatePicker'
 
 class PairSelect extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedPair: ''
+      selectedPair: '',
+      selectedDate: new Date()
     };
   }
   PairChange = (e) => {
@@ -16,6 +18,11 @@ class PairSelect extends Component {
       uniqueId: this.state.uniqueId
     });
   }
+  handleDateChange = (datetime) => {
+    this.setState({
+      selectedDate: datetime
+    })
+  };
   addButtonClick = () => {
     const selectedPair = this.state.selectedPair;
     this.props.addPair(selectedPair)
@@ -23,32 +30,21 @@ class PairSelect extends Component {
 
   render() {
     return (
-      <>
-        <FormControl size="small" variant="outlined">
-          <InputLabel htmlFor="outlined-age-native-simple">Pair</InputLabel>
-          <Select
-            native
-            value={this.state.selectedPair}
-            onChange={this.PairChange}
-            inputProps={{
-              id: 'outlined-age-native-simple',
-            }}
-          >
-            <option aria-label="None" value="" />
-            <option value="USD_JPY">USD_JPY</option>
-            <option value="EUR_USD">EUR_USD</option>
-            <option value="GBP_JPY">GBP_JPY</option>
-          </Select>
+      <FormControl size="small" variant="outlined">
+        <PareSelector onChangeCallback={this.PairChange}
+                      value={this.state.selectedPair} />
+        <PastDatePicker onChangeCallback={this.handleDateChange}
+                        value={this.state.selectedDate} />
 
-          <select id="select" value={this.state.selectedPair} onChange={this.PairChange} >
-            <option value=''>Select Pair</option>
-            <option value="USD_JPY">USD_JPY</option>
-            <option value="EUR_USD">EUR_USD</option>
-            <option value="GBP_JPY">GBP_JPY</option>
-          </select>
-          <button onClick={this.addButtonClick} >Request Histroy</button>
-        </FormControl>
-      </>
+        <input disabled value={this.state.selectedDate} />
+        <select id="select" value={this.state.selectedPair} onChange={this.PairChange} >
+          <option value=''>Select Pair</option>
+          <option value="USD_JPY">USD_JPY</option>
+          <option value="EUR_USD">EUR_USD</option>
+          <option value="GBP_JPY">GBP_JPY</option>
+        </select>
+        <button onClick={this.addButtonClick} >Request Histroy</button>
+      </FormControl>
     )
   }
 }

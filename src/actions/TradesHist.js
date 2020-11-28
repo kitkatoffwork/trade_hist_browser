@@ -4,9 +4,13 @@ export const selectPair = (pareName) => ({
   type: 'SELECT_PAIR',
   payload: { pareName }
 });
-const request = (pareName) => ({
+export const setFromDatetime = (fromDatetime) => ({
+  type: 'SET_FROM_DATETIME',
+  payload: { fromDatetime }
+});
+const request = () => ({
   type: 'REQUEST',
-  payload: { pareName }
+  payload: {}
 });
 const receiveData = (pareName, errorMsg, response) => ({
   type: 'RECEIVE_RESPONSE',
@@ -17,13 +21,14 @@ const finishRequest = (pareName) => ({
   payload: { pareName }
 });
 
-export const requestHist = (pareName) => {
+export const requestHist = (pareName, fromDatetime) => {
   return async dispatch => {
-    dispatch(request(pareName));
+    dispatch(request());
 
     try {
+      const isoDatetime = fromDatetime.toISOString()
       const response = await fetch(
-        API_URL + `?pareName=${pareName}`, {
+        API_URL + `?pareName=${pareName}&fromDatetime=${isoDatetime}`, {
           // headers: {'Content-Type': 'application/json'},
           // method: 'POST',
           // body: JSON.stringify({aa: 'dwa', bere: 13456})
