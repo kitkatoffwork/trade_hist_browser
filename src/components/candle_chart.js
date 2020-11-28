@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import * as am4core from '@amcharts/amcharts4/core';
 import * as am4charts from '@amcharts/amcharts4/charts';
+import * as am4plugins_bullets from '@amcharts/amcharts4/plugins/bullets';
 import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 
 am4core.useTheme(am4themes_animated);
@@ -25,6 +26,7 @@ class CandleChart extends Component {
 
     chart.cursor = new am4charts.XYCursor();
     chart.dateFormatter.inputDateFormat = 'yyyy-MM-dd HH';
+    chart.legend = new am4charts.Legend();
     chart.paddingRight = 20;
 
     const dateAxis = chart.xAxes.push(new am4charts.DateAxis());
@@ -38,7 +40,10 @@ class CandleChart extends Component {
 
     const candlestick = this.addCandlestick(chart);
     // this.addLineSample(chart);
-    this.addEntryPoint(chart)
+    this.addEntryScatter(chart, 'long', this.addBullet);
+    this.addEntryScatter(chart, 'short', this.addReverseBullet);
+    this.addEntryScatter(chart, 'exit', this.addDiamondBullet);
+    this.addEntryScatter(chart, 'stoploss', this.addHorizontalBullet);
 
     const scrollbarX = new am4charts.XYChartScrollbar();
     scrollbarX.series.push(candlestick);
@@ -60,34 +65,70 @@ class CandleChart extends Component {
     return candlestick;
   }
 
-  addEntryPoint(chart) {
-    const lineSample = chart.series.push(new am4charts.LineSeries());
-    lineSample.name = 'Entry';
-    lineSample.dataFields.dateX = 'time';
-    lineSample.dataFields.valueY = 'entry_price';
-    lineSample.minBulletDistance = 15;
-    lineSample.strokeWidth = 2
-    lineSample.stroke = chart.colors.getIndex(3);
-    lineSample.strokeOpacity = 0.0;
-    lineSample.tooltipText = "price: {entry_price}";
+  addEntryScatter(chart, target, addBullet) {
+    const invisibleSeries = chart.series.push(new am4charts.LineSeries());
+    invisibleSeries.name = target;
+    invisibleSeries.dataFields.dateX = 'time';
+    invisibleSeries.dataFields.valueY = target;
+    // invisibleSeries.minBulletDistance = 15;
+    invisibleSeries.strokeOpacity = 0.0;
+    invisibleSeries.tooltipText = `${target}: {${target}}`;
 
-    lineSample.data = this.props.candles;
-    this.addBullet(chart, lineSample);
+    invisibleSeries.data = this.props.candles;
+    addBullet(chart, invisibleSeries);
   }
 
-  addBullet(chart, lineSample) {
-    let bullet = lineSample.bullets.push(new am4charts.Bullet());
+  addBullet(chart, invisibleSeries) {
+    let bullet = invisibleSeries.bullets.push(new am4charts.Bullet());
     // Add a triangle to act as am arrow
-    let arrow = bullet.createChild(am4core.Triangle);
+    const arrow = bullet.createChild(am4core.Triangle);
     arrow.horizontalCenter = "middle";
-    arrow.verticalCenter = "middle";
-    arrow.strokeWidth = 0;
-    arrow.fill = chart.colors.getIndex(0);
+    arrow.verticalCenter = "top";
+    arrow.stroke = am4core.color('white');
+    arrow.strokeWidth = 1.5;
+    arrow.fill = chart.colors.getIndex(16);
     arrow.direction = "top";
-    arrow.width = 12;
-    arrow.height = 12;
+    arrow.width = 10;
+    arrow.height = 10;
   }
 
+  addReverseBullet(chart, invisibleSeries) {
+    let bullet = invisibleSeries.bullets.push(new am4charts.Bullet());
+    // Add a reverse triangle to act as an arrow
+    const arrow = bullet.createChild(am4core.Triangle);
+    arrow.horizontalCenter = "middle";
+    arrow.verticalCenter = "bottom";
+    arrow.stroke = am4core.color('white');
+    arrow.strokeWidth = 1.5;
+    arrow.fill = chart.colors.getIndex(0);
+    arrow.direction = "bottom";
+    arrow.width = 10;
+    arrow.height = 10;
+  }
+
+  addHorizontalBullet(chart, invisibleSeries) {
+    let bullet = invisibleSeries.bullets.push(new am4charts.Bullet());
+    const hBar = bullet.createChild(am4core.Rectangle);
+    hBar.horizontalCenter = "middle";
+    hBar.verticalCenter = "middle";
+    hBar.stroke = chart.colors.getIndex(30);
+    // hBar.strokeOpacity = 0.5;
+    hBar.fillOpacity = 0.5;
+    hBar.width = 8;
+    hBar.height = 2;
+  }
+
+  addDiamondBullet(chart, invisibleSeries) {
+    let bullet = invisibleSeries.bullets.push(new am4plugins_bullets.ShapeBullet());
+    // Add a diamond
+    bullet.shape = 'diamond';
+    bullet.stroke = am4core.color('white');
+    bullet.strokeWidth = 1.5;
+    bullet.fill = am4core.color('red');
+    bullet.fillOpacity = 0.5;
+    bullet.width = 6;
+    bullet.height = 6;
+  }
 
   render() {
     return (
