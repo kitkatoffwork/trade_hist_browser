@@ -67,6 +67,7 @@ function prepareChart() {
   addLineSample(chart);
   addScatterSample(chart);
   addReverseScatter(chart);
+  addStoplossScatter(chart)
   addDiamondScatter(chart);
 
   const scrollbarX = new am4charts.XYChartScrollbar();
@@ -155,6 +156,20 @@ function addReverseScatter(chart) {
   addReverseBullet(chart, lineSample);
 }
 
+function addStoplossScatter(chart) {
+  const lineSample = chart.series.push(new am4charts.LineSeries());
+  lineSample.name = 'stoploss';
+  lineSample.dataFields.dateX = 'value';
+  lineSample.dataFields.valueY = 'value2';
+  lineSample.strokeOpacity = 0.0;
+  lineSample.tooltipText = "{valueY}";
+  lineSample.data = [
+    { 'value': '2018-08-09', 'value2': 131 },
+    { 'value': '2018-09-04', 'value2': 161 }
+  ];
+  addHorizontalBullet(chart, lineSample);
+}
+
 
 function addDiamondScatter(chart) {
   const lineSample = chart.series.push(new am4charts.LineSeries());
@@ -175,7 +190,7 @@ function addBullet(chart, lineSample) {
   // Add a triangle to act as an arrow
   let arrow = bullet.createChild(am4core.Triangle);
   arrow.horizontalCenter = "middle";
-  arrow.verticalCenter = "middle";
+  arrow.verticalCenter = "top";
   arrow.stroke = am4core.color('white');
   arrow.strokeWidth = 1.5;
   arrow.fill = chart.colors.getIndex(16);
@@ -188,12 +203,23 @@ function addReverseBullet(chart, lineSample) {
   let bullet = lineSample.bullets.push(new am4charts.Bullet());
   // Add a reverse triangle to act as an arrow
   let arrow = bullet.createChild(am4core.Triangle);
+  arrow.horizontalCenter = "middle";
+  arrow.verticalCenter = "bottom";
   arrow.stroke = am4core.color('white');
   arrow.strokeWidth = 1.5;
   arrow.fill = chart.colors.getIndex(16);
   arrow.direction = "bottom";
   arrow.width = 10;
   arrow.height = 10;
+}
+
+function addHorizontalBullet(chart, lineSample) {
+  let bullet = lineSample.bullets.push(new am4charts.Bullet());
+  let arrow = bullet.createChild(am4core.Rectangle);
+  arrow.horizontalCenter = "middle";
+  arrow.verticalCenter = "middle";
+  arrow.width = 8;
+  arrow.height = 2;
 }
 
 function addDiamondBullet(chart, lineSample) {
