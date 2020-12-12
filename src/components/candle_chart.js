@@ -28,6 +28,7 @@ class CandleChart extends Component {
                     Common Settings
     -------------------------------------------- */
     chart.cursor = new am4charts.XYCursor();
+    chart.cursor.maxTooltipDistance = 10; // px between the target point and mouse-cursor
     chart.dateFormatter.inputDateFormat = 'yyyy-MM-dd HH';
     chart.legend = new am4charts.Legend();
     chart.paddingRight = 20;
@@ -38,14 +39,15 @@ class CandleChart extends Component {
     dateAxis.renderer.grid.template.location = 0;
     dateAxis.renderer.minGridDistance = 60;
     dateAxis.skipEmptyPeriods = true;
+    dateAxis.tooltipDateFormat = "MM-dd HH:00";
+    // dateAxis.groupData = true;
+    // dateAxis.minZoomCount = 3;
 
     /* --------------------------------------------
                       Main Axis
     -------------------------------------------- */
     const mainAxis = chart.yAxes.push(new am4charts.ValueAxis());
     this.setAxesDefaultProps(mainAxis)
-    // mainAxis.tooltip.disabled = true;
-
     mainAxis.renderer.minWidth = 35;
 
     const candlestick = this.addCandlestick(chart);
@@ -92,6 +94,7 @@ class CandleChart extends Component {
     candlestick.dataFields.highValueY = 'high';
     candlestick.tooltipText = 'Open: [bold]{openValueY.value}[/]\nLow: [bold]{lowValueY.value}[/]\nHigh: [bold]{highValueY.value}[/]\nClose: [bold]{valueY.value}[/]';
 
+    this.setTooltipProps(candlestick);
     return candlestick;
   }
 
@@ -103,8 +106,9 @@ class CandleChart extends Component {
     // invisibleSeries.minBulletDistance = 15;
     invisibleSeries.strokeOpacity = 0.0;
     invisibleSeries.tooltipText = `${target}: {${target}}`;
-
     invisibleSeries.data = this.props.candles;
+
+    this.setTooltipProps(invisibleSeries);
     addBullet(chart, invisibleSeries);
   }
 
@@ -171,6 +175,15 @@ class CandleChart extends Component {
     series.strokeOpacity = targetValName === 'gross' ? 0.5 : 1.0;
     series.tooltipText = `${targetValName}: {valueY.value}`;
     series.name = targetValName;
+  }
+
+  setTooltipProps(series) {
+    // series.tooltip.getFillFromObject = false;
+    // series.tooltip.label.propertyFields.fill = "color";
+    // series.tooltip.background.propertyFields.stroke = "color";
+    // series.tooltip.disabled = true;
+    series.tooltip.pointerOrientation = "left";
+    series.tooltip.dx = 5;
   }
 
   render() {
