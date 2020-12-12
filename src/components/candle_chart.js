@@ -112,8 +112,9 @@ class CandleChart extends Component {
     hBar.horizontalCenter = "middle";
     hBar.verticalCenter = "middle";
     hBar.stroke = chart.colors.getIndex(30);
-    // hBar.strokeOpacity = 0.5;
-    hBar.fillOpacity = 0.5;
+    hBar.strokeOpacity = 0.7;
+    hBar.fill = chart.colors.getIndex(30);
+    hBar.fillOpacity = 0.7;
     hBar.width = 8;
     hBar.height = 2;
   }
