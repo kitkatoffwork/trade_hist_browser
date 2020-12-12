@@ -24,19 +24,29 @@ class CandleChart extends Component {
     chart.data = this.props.candles;
     console.log(this.props.candles);
 
+    /* --------------------------------------------
+                    Common Settings
+    -------------------------------------------- */
     chart.cursor = new am4charts.XYCursor();
     chart.dateFormatter.inputDateFormat = 'yyyy-MM-dd HH';
     chart.legend = new am4charts.Legend();
     chart.paddingRight = 20;
+    chart.rightAxesContainer.layout = "vertical";
+    chart.rightAxesContainer.reverseOrder = true;
 
     const dateAxis = chart.xAxes.push(new am4charts.DateAxis());
     dateAxis.renderer.grid.template.location = 0;
     dateAxis.renderer.minGridDistance = 60;
     dateAxis.skipEmptyPeriods = true;
 
-    const valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-    // valueAxis.tooltip.disabled = true;
-    valueAxis.renderer.minWidth = 35;
+    /* --------------------------------------------
+                      Main Axis
+    -------------------------------------------- */
+    const mainAxis = chart.yAxes.push(new am4charts.ValueAxis());
+    this.setAxesDefaultProps(mainAxis)
+    // mainAxis.tooltip.disabled = true;
+
+    mainAxis.renderer.minWidth = 35;
 
     const candlestick = this.addCandlestick(chart);
     // this.addLineSample(chart);
@@ -45,11 +55,31 @@ class CandleChart extends Component {
     this.addEntryScatter(chart, 'exit', this.addDiamondBullet);
     this.addEntryScatter(chart, 'stoploss', this.addHorizontalBullet);
 
+    /* --------------------------------------------
+                      Volume Axis
+    -------------------------------------------- */
+    const volumeAxis = chart.yAxes.push(new am4charts.ValueAxis());
+    volumeAxis.height = am4core.percent(50);
+    volumeAxis.marginTop = 20;
+    this.setAxesDefaultProps(volumeAxis)
+    this.addVolumeSeries(chart, "pl", volumeAxis);
+    this.addVolumeSeries(chart, "gross", volumeAxis);
+
+    /* --------------------------------------------
+                    Common Settings
+    -------------------------------------------- */
     const scrollbarX = new am4charts.XYChartScrollbar();
     scrollbarX.series.push(candlestick);
     chart.scrollbarX = scrollbarX;
 
     return chart;
+  }
+
+  setAxesDefaultProps(axis) {
+    // axis.renderer.inside = true;
+    axis.renderer.opposite = true;
+    axis.renderer.gridContainer.background.fill = am4core.color("#000000");
+    axis.renderer.gridContainer.background.fillOpacity = 0.03;
   }
 
   addCandlestick(chart) {
@@ -129,6 +159,18 @@ class CandleChart extends Component {
     bullet.fillOpacity = 0.5;
     bullet.width = 6;
     bullet.height = 6;
+  }
+
+  addVolumeSeries(chart, targetValName, axis) {
+    const series = chart.series.push(new am4charts.ColumnSeries());
+    series.clustered = false;
+    series.dataFields.dateX = "time";
+    series.dataFields.valueY = targetValName;
+    series.yAxis = axis;
+    series.fillOpacity = targetValName === 'gross' ? 0.5 : 1.0;
+    series.strokeOpacity = targetValName === 'gross' ? 0.5 : 1.0;
+    series.tooltipText = `${targetValName}: {valueY.value}`;
+    series.name = targetValName;
   }
 
   render() {
