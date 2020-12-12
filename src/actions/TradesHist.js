@@ -34,13 +34,14 @@ export const requestHist = (pareName, fromDatetime) => {
           // body: JSON.stringify({aa: 'dwa', bere: 13456})
         }
       );
-      const data = await response.json();
+      const parsed_response = await response.json();
       const status = await response.status;
 
       if (status === 200) {
-        dispatch(receiveData(pareName, null, data));
+        const history = parsed_response.history;
+        dispatch(receiveData(pareName, null, history));
       } else {
-        dispatch(receiveData(pareName, data.message));
+        dispatch(receiveData(pareName, parsed_response.message));
       }
     } catch (error) {
       dispatch(receiveData(pareName, error.message));
