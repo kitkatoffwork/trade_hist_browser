@@ -24,19 +24,31 @@ class CandleChart extends Component {
     chart.data = this.props.candles;
     console.log(this.props.candles);
 
+    /* --------------------------------------------
+                    Common Settings
+    -------------------------------------------- */
     chart.cursor = new am4charts.XYCursor();
+    chart.cursor.maxTooltipDistance = 10; // px between the target point and mouse-cursor
     chart.dateFormatter.inputDateFormat = 'yyyy-MM-dd HH';
     chart.legend = new am4charts.Legend();
     chart.paddingRight = 20;
+    chart.rightAxesContainer.layout = "vertical";
+    chart.rightAxesContainer.reverseOrder = true;
 
     const dateAxis = chart.xAxes.push(new am4charts.DateAxis());
     dateAxis.renderer.grid.template.location = 0;
     dateAxis.renderer.minGridDistance = 60;
     dateAxis.skipEmptyPeriods = true;
+    dateAxis.tooltipDateFormat = "MM-dd HH:00";
+    // dateAxis.groupData = true;
+    // dateAxis.minZoomCount = 3;
 
-    const valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-    // valueAxis.tooltip.disabled = true;
-    valueAxis.renderer.minWidth = 35;
+    /* --------------------------------------------
+                      Main Axis
+    -------------------------------------------- */
+    const mainAxis = chart.yAxes.push(new am4charts.ValueAxis());
+    this.setAxesDefaultProps(mainAxis)
+    mainAxis.renderer.minWidth = 35;
 
     const candlestick = this.addCandlestick(chart);
     // this.addLineSample(chart);
@@ -45,11 +57,31 @@ class CandleChart extends Component {
     this.addEntryScatter(chart, 'exit', this.addDiamondBullet);
     this.addEntryScatter(chart, 'stoploss', this.addHorizontalBullet);
 
+    /* --------------------------------------------
+                      Volume Axis
+    -------------------------------------------- */
+    const volumeAxis = chart.yAxes.push(new am4charts.ValueAxis());
+    volumeAxis.height = am4core.percent(50);
+    volumeAxis.marginTop = 20;
+    this.setAxesDefaultProps(volumeAxis)
+    this.addVolumeSeries(chart, "pl", volumeAxis);
+    this.addVolumeSeries(chart, "gross", volumeAxis);
+
+    /* --------------------------------------------
+                    Common Settings
+    -------------------------------------------- */
     const scrollbarX = new am4charts.XYChartScrollbar();
     scrollbarX.series.push(candlestick);
     chart.scrollbarX = scrollbarX;
 
     return chart;
+  }
+
+  setAxesDefaultProps(axis) {
+    // axis.renderer.inside = true;
+    axis.renderer.opposite = true;
+    axis.renderer.gridContainer.background.fill = am4core.color("#000000");
+    axis.renderer.gridContainer.background.fillOpacity = 0.03;
   }
 
   addCandlestick(chart) {
@@ -62,6 +94,7 @@ class CandleChart extends Component {
     candlestick.dataFields.highValueY = 'high';
     candlestick.tooltipText = 'Open: [bold]{openValueY.value}[/]\nLow: [bold]{lowValueY.value}[/]\nHigh: [bold]{highValueY.value}[/]\nClose: [bold]{valueY.value}[/]';
 
+    this.setTooltipProps(candlestick);
     return candlestick;
   }
 
@@ -73,8 +106,9 @@ class CandleChart extends Component {
     // invisibleSeries.minBulletDistance = 15;
     invisibleSeries.strokeOpacity = 0.0;
     invisibleSeries.tooltipText = `${target}: {${target}}`;
-
     invisibleSeries.data = this.props.candles;
+
+    this.setTooltipProps(invisibleSeries);
     addBullet(chart, invisibleSeries);
   }
 
@@ -112,8 +146,9 @@ class CandleChart extends Component {
     hBar.horizontalCenter = "middle";
     hBar.verticalCenter = "middle";
     hBar.stroke = chart.colors.getIndex(30);
-    // hBar.strokeOpacity = 0.5;
-    hBar.fillOpacity = 0.5;
+    hBar.strokeOpacity = 0.7;
+    hBar.fill = chart.colors.getIndex(30);
+    hBar.fillOpacity = 0.7;
     hBar.width = 8;
     hBar.height = 2;
   }
@@ -128,6 +163,27 @@ class CandleChart extends Component {
     bullet.fillOpacity = 0.5;
     bullet.width = 6;
     bullet.height = 6;
+  }
+
+  addVolumeSeries(chart, targetValName, axis) {
+    const series = chart.series.push(new am4charts.ColumnSeries());
+    series.clustered = false;
+    series.dataFields.dateX = "time";
+    series.dataFields.valueY = targetValName;
+    series.yAxis = axis;
+    series.fillOpacity = targetValName === 'gross' ? 0.5 : 1.0;
+    series.strokeOpacity = targetValName === 'gross' ? 0.5 : 1.0;
+    series.tooltipText = `${targetValName}: {valueY.value}`;
+    series.name = targetValName;
+  }
+
+  setTooltipProps(series) {
+    // series.tooltip.getFillFromObject = false;
+    // series.tooltip.label.propertyFields.fill = "color";
+    // series.tooltip.background.propertyFields.stroke = "color";
+    // series.tooltip.disabled = true;
+    series.tooltip.pointerOrientation = "left";
+    series.tooltip.dx = 5;
   }
 
   render() {
