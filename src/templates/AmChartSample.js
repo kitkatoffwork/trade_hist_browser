@@ -11,12 +11,14 @@ am4core.useTheme(am4themes_animated);
 // https://www.amcharts.com/demos/date-based-data/
 // https://www.amcharts.com/demos/duration-on-value-axis/
 // https://www.amcharts.com/demos/stock-chart-candlesticks/
-// https://www.amcharts.com/demos/scatter-chart/
 // https://www.amcharts.com/demos/professional-candlesticks/
 // https://www.amcharts.com/docs/v4/concepts/bullets/
 // https://www.amcharts.com/docs/v4/getting-started/integrations/using-react/
+// https://www.amcharts.com/docs/v4/concepts/chart-cursor/#Snapping_to_data_items
 // INFO: How to add vertical line at the specified point of xAxis
 // https://www.amcharts.com/demos/step-count-chart/
+// INFO: How to enable user to draw border on the chart
+// https://www.amcharts.com/demos/drawing-chart-series-with-mouse-or-touch/
 
 class AmChartSample extends Component {
   componentDidMount() {
@@ -53,6 +55,13 @@ function prepareChart() {
   // dateAxis.renderer.grid.template.location = 0;
   dateAxis.renderer.minGridDistance = 60;
   dateAxis.skipEmptyPeriods = true;
+  const range = dateAxis.axisRanges.create();
+  range.date = new Date(2018, 7, 15, 12);
+  // range.axisFill.fill = am4core.color("#396478");
+  // range.axisFill.fillOpacity = 0.2;
+  range.grid.stroke = am4core.color("#396478");
+  range.grid.strokeOpacity = 0.4;
+  range.grid.strokeDasharray = "6, 8"
 
   const priceAxis = chart.yAxes.push(new am4charts.ValueAxis());
   priceAxis.height = am4core.percent(65);
