@@ -1,4 +1,4 @@
-const API_URL = 'https://ft30m5906e.execute-api.us-east-2.amazonaws.com/default/tradehist'
+const API_URL = process.env.REACT_APP_HIST_API_URL
 
 export const selectPair = (pareName) => ({
   type: 'SELECT_PAIR',

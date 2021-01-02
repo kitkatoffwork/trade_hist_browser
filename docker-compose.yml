@@ -1,0 +1,14 @@
+version: '3.0'
+services:
+  react:
+    command: >
+      sh -c 'npm install &&
+             npm start'
+    expose:
+      - '3000'
+    image: node:12.16.1-alpine
+    ports:
+      - 3000:3000
+    volumes:
+      - ./:/var/www/app
+    working_dir: /var/www/app
