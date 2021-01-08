@@ -2,6 +2,19 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Environment Variables
+
+|Variable|Example|
+|--------|-------|
+|REACT_APP_HIST_API_URL|`https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/stage/function`|
+
+```bash
+# --- In localhost OS ---
+# Locate `.env.local` and rewrite `REACT_APP_HIST_API_URL`
+# This enables app to request Candlestick data, indicators and so on to backend
+$ cp .env.local.sample .env.local
+```
+
 ## Develop
 
 In the project directory, you can run:
