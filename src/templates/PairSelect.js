@@ -9,9 +9,8 @@ function PairSelect(props) {
   const [pair, setPair] = useState('');
   const [date, setDate] = useState(new Date());
 
-  function PairChange(e) {
-    setPair(e.target.value);
-  }
+  const PairChange = (e) => setPair(e.target.value);
+  const addButtonClick = () => props.addPair(pair);
 
   return (
     <FormControl size="small" variant="outlined">
@@ -25,7 +24,7 @@ function PairSelect(props) {
         <option value="EUR_USD">EUR_USD</option>
         <option value="GBP_JPY">GBP_JPY</option>
       </select>
-      <button onClick={props.addPair(pair)} >Request Histroy</button>
+      <button onClick={addButtonClick} >Request Histroy</button>
     </FormControl>
   )
 }
