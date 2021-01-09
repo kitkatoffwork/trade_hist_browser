@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 
 import Demo from './templates/Demo';
 import AmChartSample from './templates/AmChartSample';
@@ -8,49 +8,37 @@ import SampleList from './templates/SampleList';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 
-class App extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      pairs: [
-        { name: 'USD_JPY', uniqueId: -2 },
-        { name: 'EUR_USD', uniqueId: -1 }
-      ],
-      uniqueId: 0
-    };
+
+function App() {
+  const [pairs, setPairs] = useState([
+    { name: 'USD_JPY', uniqueId: -2 },
+    { name: 'EUR_USD', uniqueId: -1 }
+  ]);
+  const [uniqueId, setUniqueId] = useState(0);
+
+  function addPair(name) {
+    pairs.push({ name: name, uniqueId: uniqueId });
+    setPairs(pairs);
+    setUniqueId(uniqueId + 1);
   }
 
-  addPair = (name) => {
-    const { pairs, uniqueId } = this.state;
-
-    pairs.push({
-      name: name, uniqueId: uniqueId
-    });
-
-    this.setState({
-      pairs, uniqueId: uniqueId + 1
-    });
-  }
-  resetPairs = () => {
-    this.setState({
-      pairs: [], uniqueId: 0
-    });
+  function resetPairs() {
+    setPairs([]);
+    setUniqueId(0);
   }
 
-  render() {
-    return (
-      <>
-        <Container> {/*maxWidth="sm"*/}
-          <PairSelect addPair={this.addPair} />
-          <SampleList pairs={this.state.pairs}/>
-          <Button onClick={this.resetPairs} >Clear</Button>
-        </Container>
-        <AmChartSample />
+  return (
+    <>
+      <Container> {/*maxWidth="sm"*/}
+        <PairSelect addPair={addPair} />
+        <SampleList pairs={pairs}/>
+        <Button onClick={resetPairs} >Clear</Button>
+      </Container>
+      <AmChartSample />
 
-        <Demo />
-      </>
-    );
-  }
+      <Demo />
+    </>
+  );
 }
 
 export default App;
