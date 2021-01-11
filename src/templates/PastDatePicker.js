@@ -19,10 +19,10 @@ export default function PastDatePicker(props) {
         disableFuture
         /* disableToolbar */
         format="yyyy/MM/dd"
-        label="FROM"
+        label={props.target}
         onChange={props.onChangeCallback}
         /* onError={console.log} */
-        openTo="month"
+        openTo="date"
         value={props.value}
         variant="inline"
         views={["year", "month", "date",]}

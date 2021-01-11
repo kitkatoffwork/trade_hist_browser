@@ -8,6 +8,10 @@ export const setFromDatetime = (fromDatetime) => ({
   type: 'SET_FROM_DATETIME',
   payload: { fromDatetime }
 });
+export const setToDatetime = (toDatetime) => ({
+  type: 'SET_TO_DATETIME',
+  payload: { toDatetime }
+});
 const request = () => ({
   type: 'REQUEST',
   payload: {}
@@ -21,14 +25,15 @@ const finishRequest = (pareName) => ({
   payload: { pareName }
 });
 
-export const requestHist = (pareName, fromDatetime) => {
+export const requestHist = (pareName, fromDatetime, toDatetime) => {
   return async dispatch => {
     dispatch(request());
 
     try {
-      const isoDatetime = fromDatetime.toISOString()
+      const isoFrom = fromDatetime.toISOString()
+      const isoTo = toDatetime.toISOString()
       const response = await fetch(
-        API_URL + `?pareName=${pareName}&fromDatetime=${isoDatetime}`, {
+        API_URL + `?pareName=${pareName}&from=${isoFrom}&to=${isoTo}`, {
           // headers: {'Content-Type': 'application/json'},
           // method: 'POST',
           // body: JSON.stringify({aa: 'dwa', bere: 13456})
