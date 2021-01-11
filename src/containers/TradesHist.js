@@ -6,6 +6,7 @@ const mapStateToProps = (state, ownProps) => ({
   // pareName: ownProps.pareName,
   pareName: state.requestReducer.pareName,
   fromDatetime: state.requestReducer.fromDatetime,
+  toDatetime: state.requestReducer.toDatetime,
   status: state.requestReducer.status,
   data: state.requestReducer.data,
   errorMsg: state.requestReducer.errorMsg
@@ -24,8 +25,11 @@ const mapDispatchToProps = (dispatch) => ({
   setFromDatetime(fromDatetime) {
     dispatch(actions.setFromDatetime(fromDatetime));
   },
-  request(pareName, fromDatetime) {
-    dispatch(actions.requestHist(pareName, fromDatetime));
+  setToDatetime(toDatetime) {
+    dispatch(actions.setToDatetime(toDatetime));
+  },
+  request(pareName, fromDatetime, toDatetime) {
+    dispatch(actions.requestHist(pareName, fromDatetime, toDatetime));
   },
 });
 

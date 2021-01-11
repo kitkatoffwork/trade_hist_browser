@@ -41,8 +41,8 @@ class TradesHist extends React.Component {
   render() {
     const {
       classes,
-      selectPair, setFromDatetime, request,
-      pareName, fromDatetime, status, data, errorMsg
+      selectPair, setFromDatetime, setToDatetime, request,
+      pareName, fromDatetime, toDatetime, status, data, errorMsg
     } = this.props;
 
     return (
@@ -53,12 +53,16 @@ class TradesHist extends React.Component {
         {/* </Container><FormControl size="small" variant="outlined" className={props.className}> */}
         <PareSelector value={pareName}
                       onChangeCallback={(e) => selectPair(e.target.value)} />
-        <PastDatePicker value={fromDatetime}
+        <PastDatePicker target='FROM'
+                        value={fromDatetime}
                         onChangeCallback={(date, _event) => setFromDatetime(date)} />
+        <PastDatePicker target='TO'
+                        value={toDatetime}
+                        onChangeCallback={(date, _event) => setToDatetime(date)} />
         <Button size="small"
                 color="primary"
                 variant="contained"
-                onClick={() => request(pareName, fromDatetime)} disabled={status === 1}>
+                onClick={() => request(pareName, fromDatetime, toDatetime)} disabled={status === 1}>
           Load Hist
         </Button>
 
@@ -125,6 +129,7 @@ TradesHist.propTypes = {
   request: PropTypes.func.isRequired,
   pareName: PropTypes.string.isRequired,
   fromDatetime: PropTypes.object.isRequired,
+  toDatetime: PropTypes.object.isRequired,
   status: PropTypes.number.isRequired,
   data: PropTypes.array.isRequired,
   errorMsg: PropTypes.string.isRequired,
