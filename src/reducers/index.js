@@ -6,7 +6,7 @@ import requestReducer from './TradesHist'
 
 const createRootReducer = (history) => combineReducers({
   router: connectRouter(history),
-  tasksReducer,
-  requestReducer,
+  tasksReducer: tasksReducer,
+  requestReducer: requestReducer,
 })
 export default createRootReducer
