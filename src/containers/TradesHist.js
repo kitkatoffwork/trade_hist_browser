@@ -5,8 +5,8 @@ import * as actions from '../actions/TradesHist';
 const mapStateToProps = (state, ownProps) => ({
   // pareName: ownProps.pareName,
   pareName: state.requestReducer.pareName,
-  fromDatetime: state.requestReducer.fromDatetime,
-  toDatetime: state.requestReducer.toDatetime,
+  fromISO: state.requestReducer.fromISO,
+  toISO: state.requestReducer.toISO,
   status: state.requestReducer.status,
   data: state.requestReducer.data,
   errorMsg: state.requestReducer.errorMsg
@@ -22,14 +22,14 @@ const mapDispatchToProps = (dispatch) => ({
   selectPair(pairName) {
     dispatch(actions.selectPair(pairName));
   },
-  setFromDatetime(fromDatetime) {
-    dispatch(actions.setFromDatetime(fromDatetime));
+  setFromDatetime(fromISO) {
+    dispatch(actions.setFromDatetime(fromISO));
   },
-  setToDatetime(toDatetime) {
-    dispatch(actions.setToDatetime(toDatetime));
+  setToDatetime(toISO) {
+    dispatch(actions.setToDatetime(toISO));
   },
-  request(pareName, fromDatetime, toDatetime) {
-    dispatch(actions.requestHist(pareName, fromDatetime, toDatetime));
+  request(pareName, fromISO, toISO) {
+    dispatch(actions.requestHist(pareName, fromISO, toISO));
   },
 });
 

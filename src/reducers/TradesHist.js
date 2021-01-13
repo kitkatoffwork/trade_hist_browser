@@ -7,8 +7,8 @@ const statuses = {
 
 const initialState = {
   pareName: 'USD_JPY',
-  fromDatetime: new Date(),
-  toDatetime: new Date(),
+  fromISO: (new Date()).toISOString(),
+  toISO: (new Date()).toISOString(),
   status: statuses.blank,
   data: [],
   errorMsg: '',
@@ -24,12 +24,12 @@ export default function requestReducer(state = initialState, action) {
     case 'SET_FROM_DATETIME':
       return {
         ...state,
-        fromDatetime: action.payload.fromDatetime,
+        fromISO: action.payload.fromISO,
       };
     case 'SET_TO_DATETIME':
       return {
         ...state,
-        toDatetime: action.payload.toDatetime,
+        toISO: action.payload.toISO,
       };
     case 'REQUEST':
       return {

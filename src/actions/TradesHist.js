@@ -4,13 +4,13 @@ export const selectPair = (pareName) => ({
   type: 'SELECT_PAIR',
   payload: { pareName }
 });
-export const setFromDatetime = (fromDatetime) => ({
+export const setFromDatetime = (fromISO) => ({
   type: 'SET_FROM_DATETIME',
-  payload: { fromDatetime }
+  payload: { fromISO }
 });
-export const setToDatetime = (toDatetime) => ({
+export const setToDatetime = (toISO) => ({
   type: 'SET_TO_DATETIME',
-  payload: { toDatetime }
+  payload: { toISO }
 });
 const request = () => ({
   type: 'REQUEST',
@@ -25,15 +25,14 @@ const finishRequest = (pareName) => ({
   payload: { pareName }
 });
 
-export const requestHist = (pareName, fromDatetime, toDatetime) => {
+export const requestHist = (pareName, fromISO, toISO) => {
   return async dispatch => {
     dispatch(request());
 
     try {
-      const isoFrom = fromDatetime.toISOString()
-      const isoTo = toDatetime.toISOString()
       const response = await fetch(
-        API_URL + `?pareName=${pareName}&from=${isoFrom}&to=${isoTo}`, {
+        API_URL + `?pareName=${pareName}&from=${fromISO}&to=${toISO}`, {
+          // mode: 'cors' // なくてもCORS対応できてる
           // headers: {'Content-Type': 'application/json'},
           // method: 'POST',
           // body: JSON.stringify({aa: 'dwa', bere: 13456})
