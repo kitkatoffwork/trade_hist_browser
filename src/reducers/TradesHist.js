@@ -10,6 +10,8 @@ const statuses = {
 const slice = createSlice({
   name: 'tradeHist',
   initialState: {
+    indicatorNames: ['Now loading...'],
+    selectedIndicators: [],
     pareName: 'USD_JPY',
     fromISO: (new Date()).toISOString(),
     toISO: (new Date()).toISOString(),
@@ -18,6 +20,12 @@ const slice = createSlice({
     errorMsg: '',
   },
   reducers: {
+    setIndicatorNames(state, action) {
+      state.indicatorNames = action.payload
+    },
+    changeSelectedIndicators(state, action) {
+      state.selectedIndicators = action.payload
+    },
     selectPair(state, action) {
       state.pareName = action.payload
     },
@@ -45,7 +53,9 @@ const slice = createSlice({
 });
 
 export const {
-  selectPair, setFromDatetime, setToDatetime,
+  setIndicatorNames, changeSelectedIndicators,
+  selectPair,
+  setFromDatetime, setToDatetime,
   request, receiveResponse, finishRequest
 } = slice.actions
 

@@ -6,7 +6,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 |Variable|Example|
 |--------|-------|
-|REACT_APP_HIST_API_URL|`https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/stage/function`|
+|REACT_APP_HIST_API_URL|`https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/stage`|
 
 ```bash
 # --- In localhost OS ---

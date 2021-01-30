@@ -10,6 +10,7 @@ import {
   Paper, Table, TableContainer, TableHead, TableBody, TableRow, TableCell
 } from '@material-ui/core';
 
+import IndicatorsSelector from '../templates/IndicatorsSelector'
 import PairSelector from '../templates/PairSelector'
 import PastDatePicker from '../templates/PastDatePicker'
 import CandleChart from './candle_chart';
@@ -19,17 +20,17 @@ const styles = theme => ({
     maxHeight: 300,
     margin: theme.spacing(1),
   },
-  // formControl: {
-  //   margin: theme.spacing(1),
-  //   minWidth: 120,
-  // },
+  dropdownStyle: {
+    maxHeight: 400,
+    width: 250,
+  },
 });
 
 class TradesHist extends React.Component {
-  // INFO: 画面初期描画と同時にグラフも描画する場合はこれをコメントイン
-  // componentDidMount() {
-  //   this.props.onMount(this.props.pareName);
-  // }
+  // INFO: 画面初期描画と同時に実行
+  componentDidMount() {
+    this.props.onMount();
+  }
 
   /* この componentDidUpdate をコメントアウトしても、少なくとも初回は request が飛んでいる */
   // componentDidUpdate(nextProps) {
@@ -41,9 +42,13 @@ class TradesHist extends React.Component {
   render() {
     const {
       classes,
-      selectPair, setFromDatetime, setToDatetime, request,
-      pareName, fromISO, toISO, status, data, errorMsg
+      selectPair, changeSelectedIndicators, setFromDatetime, setToDatetime, request,
+      indicatorNames, selectedIndicators, pareName, fromISO, toISO, status, data, errorMsg
     } = this.props;
+
+    function changeIndicators(event) {
+      changeSelectedIndicators(event.target.value);
+    }
 
     return (
       <Container>
@@ -51,14 +56,24 @@ class TradesHist extends React.Component {
         <p>Pare Name: {pareName}</p>
 
         {/* </Container><FormControl size="small" variant="outlined" className={props.className}> */}
-        <PairSelector value={pareName}
-                      onChangeCallback={(e) => selectPair(e.target.value)} />
-        <PastDatePicker target='FROM'
-                        value={fromISO}
-                        onChangeCallback={(date, _event) => setFromDatetime(date.toISOString())} />
-        <PastDatePicker target='TO'
-                        value={toISO}
-                        onChangeCallback={(date, _event) => setToDatetime(date.toISOString())} />
+        <div>
+          <PairSelector value={pareName}
+                        onChangeCallback={(e) => selectPair(e.target.value)} />
+        </div>
+        <div>
+          <IndicatorsSelector indicatorNames={indicatorNames}
+                              styles={classes.dropdownStyle}
+                              value={selectedIndicators}
+                              onChangeCallback={changeIndicators} />
+        </div>
+        <div>
+          <PastDatePicker target='FROM'
+                          value={fromISO}
+                          onChangeCallback={(date, _event) => setFromDatetime(date.toISOString())} />
+          <PastDatePicker target='TO'
+                          value={toISO}
+                          onChangeCallback={(date, _event) => setToDatetime(date.toISOString())} />
+        </div>
         <Button size="small"
                 color="primary"
                 variant="contained"
@@ -123,10 +138,15 @@ export default withStyles(styles, )(TradesHist);
 
 TradesHist.propTypes = {
   classes: PropTypes.object.isRequired,
-  // onMount: PropTypes.func.isRequired,
+  // Actions
+  onMount: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
   selectPair: PropTypes.func.isRequired,
   request: PropTypes.func.isRequired,
+
+  // States
+  indicatorNames: PropTypes.arrayOf(PropTypes.string).isRequired,
+  selectedIndicators: PropTypes.array.isRequired,
   pareName: PropTypes.string.isRequired,
   fromISO: PropTypes.string.isRequired,
   toISO: PropTypes.string.isRequired,
