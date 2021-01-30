@@ -42,7 +42,7 @@ class TradesHist extends React.Component {
     const {
       classes,
       selectPair, setFromDatetime, setToDatetime, request,
-      pareName, fromDatetime, toDatetime, status, data, errorMsg
+      pareName, fromISO, toISO, status, data, errorMsg
     } = this.props;
 
     return (
@@ -54,15 +54,15 @@ class TradesHist extends React.Component {
         <PareSelector value={pareName}
                       onChangeCallback={(e) => selectPair(e.target.value)} />
         <PastDatePicker target='FROM'
-                        value={fromDatetime}
-                        onChangeCallback={(date, _event) => setFromDatetime(date)} />
+                        value={fromISO}
+                        onChangeCallback={(date, _event) => setFromDatetime(date.toISOString())} />
         <PastDatePicker target='TO'
-                        value={toDatetime}
-                        onChangeCallback={(date, _event) => setToDatetime(date)} />
+                        value={toISO}
+                        onChangeCallback={(date, _event) => setToDatetime(date.toISOString())} />
         <Button size="small"
                 color="primary"
                 variant="contained"
-                onClick={() => request(pareName, fromDatetime, toDatetime)} disabled={status === 1}>
+                onClick={() => request(pareName, fromISO, toISO)} disabled={status === 1}>
           Load Hist
         </Button>
 
@@ -128,8 +128,8 @@ TradesHist.propTypes = {
   selectPair: PropTypes.func.isRequired,
   request: PropTypes.func.isRequired,
   pareName: PropTypes.string.isRequired,
-  fromDatetime: PropTypes.object.isRequired,
-  toDatetime: PropTypes.object.isRequired,
+  fromISO: PropTypes.string.isRequired,
+  toISO: PropTypes.string.isRequired,
   status: PropTypes.number.isRequired,
   data: PropTypes.array.isRequired,
   errorMsg: PropTypes.string.isRequired,

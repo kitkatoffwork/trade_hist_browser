@@ -1,3 +1,5 @@
+import { createSlice } from "@reduxjs/toolkit";
+
 const statuses = {
   blank: 0,
   loading: 1,
@@ -5,48 +7,46 @@ const statuses = {
   error: 99
 }
 
-const initialState = {
-  pareName: 'USD_JPY',
-  fromDatetime: new Date(),
-  toDatetime: new Date(),
-  status: statuses.blank,
-  data: [],
-  errorMsg: '',
-}
-
-export default function requestReducer(state = initialState, action) {
-  switch (action.type) {
-    case 'SELECT_PAIR':
-      return {
-        ...state,
-        pareName: action.payload.pareName,
-      };
-    case 'SET_FROM_DATETIME':
-      return {
-        ...state,
-        fromDatetime: action.payload.fromDatetime,
-      };
-    case 'SET_TO_DATETIME':
-      return {
-        ...state,
-        toDatetime: action.payload.toDatetime,
-      };
-    case 'REQUEST':
-      return {
-        ...state,
-        status: statuses.loading,
-        data: [],
-      };
-    case 'RECEIVE_RESPONSE':
-      return action.payload.errorMsg
-        ? { ...state, status: statuses.error, errorMsg: action.payload.errorMsg }
-        : { ...state, status: statuses.success, data: action.payload.response };
-    case 'FINISH_REQUEST':
-      return {
-        ...state,
-        // data: state.tasks.concat([action.payload.task])
-      };
-    default:
-      return state;
+const slice = createSlice({
+  name: 'tradeHist',
+  initialState: {
+    pareName: 'USD_JPY',
+    fromISO: (new Date()).toISOString(),
+    toISO: (new Date()).toISOString(),
+    status: statuses.blank,
+    data: [],
+    errorMsg: '',
+  },
+  reducers: {
+    selectPair(state, action) {
+      state.pareName = action.payload
+    },
+    setFromDatetime(state, action) {
+      state.fromISO = action.payload
+    },
+    setToDatetime(state, action) {
+      state.toISO = action.payload
+    },
+    request(state, _action) {
+      state.status = statuses.loading
+      state.data = []
+    },
+    receiveResponse(state, action) {
+      if (action.payload.errorMsg) {
+        state.status = statuses.error
+        state.errorMsg = action.payload.errorMsg
+      } else {
+        state.status = statuses.success
+        state.data = action.payload.history
+      }
+    },
+    finishRequest(_state, _action) {}
   }
-}
+});
+
+export const {
+  selectPair, setFromDatetime, setToDatetime,
+  request, receiveResponse, finishRequest
+} = slice.actions
+
+export default slice.reducer
