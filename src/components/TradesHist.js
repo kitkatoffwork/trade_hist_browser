@@ -10,7 +10,7 @@ import {
   Paper, Table, TableContainer, TableHead, TableBody, TableRow, TableCell
 } from '@material-ui/core';
 
-import PareSelector from '../templates/PareSelector'
+import PairSelector from '../templates/PairSelector'
 import PastDatePicker from '../templates/PastDatePicker'
 import CandleChart from './candle_chart';
 
@@ -51,7 +51,7 @@ class TradesHist extends React.Component {
         <p>Pare Name: {pareName}</p>
 
         {/* </Container><FormControl size="small" variant="outlined" className={props.className}> */}
-        <PareSelector value={pareName}
+        <PairSelector value={pareName}
                       onChangeCallback={(e) => selectPair(e.target.value)} />
         <PastDatePicker target='FROM'
                         value={fromISO}
