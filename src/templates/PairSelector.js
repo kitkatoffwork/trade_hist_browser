@@ -1,13 +1,13 @@
 import React from 'react';
-import { InputLabel, Select, } from '@material-ui/core';
+import { FormControl, InputLabel, Select, } from '@material-ui/core';
 
-export default function PareSelector(props) {
+export default function PairSelector(props) {
   return (
-    <>
-      <InputLabel htmlFor="outlined-age-native-simple">Pair</InputLabel>
+    <FormControl>
+      <InputLabel htmlFor="pair-selector">Pair</InputLabel>
       <Select
         inputProps={{
-          id: 'outlined-age-native-simple',
+          id: 'pair-selector',
         }}
         label="Pair"
         native
@@ -19,6 +19,6 @@ export default function PareSelector(props) {
         <option value="EUR_USD">EUR_USD</option>
         <option value="GBP_JPY">GBP_JPY</option>
       </Select>
-    </>
+    </FormControl>
   )
 }

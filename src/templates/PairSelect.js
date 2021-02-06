@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FormControl, } from '@material-ui/core';
 
-import PareSelector from '../templates/PareSelector'
+import PairSelector from '../templates/PairSelector'
 import PastDatePicker from '../templates/PastDatePicker'
 
 
@@ -14,7 +14,7 @@ function PairSelect(props) {
 
   return (
     <FormControl size="small" variant="outlined">
-      <PareSelector onChangeCallback={PairChange} value={pair} />
+      <PairSelector onChangeCallback={PairChange} value={pair} />
       <PastDatePicker onChangeCallback={setDate} value={date} />
 
       <input disabled value={date} />
