@@ -10,6 +10,15 @@ import {
 import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
 
+
+// function disableWeekends(date) {
+//   return date.getDay() === 0 || date.getDay() === 6;
+// }
+function disableSinceSpecificDate(date) {
+  return date > new Date(2021, 1, 19);
+}
+
+
 export default function PastDatePicker(props) {
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -23,6 +32,7 @@ export default function PastDatePicker(props) {
         onChange={props.onChangeCallback}
         /* onError={console.log} */
         openTo="date"
+        shouldDisableDate={disableSinceSpecificDate}
         value={props.value}
         variant="inline"
         views={["year", "month", "date",]}
