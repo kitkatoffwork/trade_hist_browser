@@ -77,7 +77,7 @@ class TradesHist extends React.Component {
         <Button size="small"
                 color="primary"
                 variant="contained"
-                onClick={() => request(pareName, fromISO, toISO)} disabled={status === 1}>
+                onClick={() => request(pareName, fromISO, toISO, selectedIndicators)} disabled={status === 1}>
           Load Hist
         </Button>
 
