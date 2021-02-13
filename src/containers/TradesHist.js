@@ -20,17 +20,18 @@ const requestIndicatorNames = () => async dispatch => {
   );
 };
 
-const requestHist = (pareName, fromISO, toISO) => {
+const requestHist = (pareName, fromISO, toISO, selectedIndicators) => {
   return async dispatch => {
     dispatch(request());
 
     try {
+      const indicator_params = selectedIndicators.map(name => `indicator_names[]=${name}`)
+                                                 .join('&');
+      const params = `pareName=${pareName}&from=${fromISO}&to=${toISO}&${indicator_params}`
       const response = await fetch(
-        API_URL + `/tradehist?pareName=${pareName}&from=${fromISO}&to=${toISO}`, {
+        API_URL + `/tradehist?${params}`, {
           // mode: 'cors' // なくてもCORS対応できてる
-          // headers: {'Content-Type': 'application/json'},
-          // method: 'POST',
-          // body: JSON.stringify({aa: 'dwa', bere: 13456})
+          // headers: {'Content-Type': 'application/json'}
         }
       );
       const parsed_response = await response.json();
@@ -87,8 +88,8 @@ const mapDispatchToProps = (dispatch) => ({
   setToDatetime(toISO) {
     dispatch(setToDatetime(toISO));
   },
-  request(pareName, fromISO, toISO) {
-    dispatch(requestHist(pareName, fromISO, toISO));
+  request(pareName, fromISO, toISO, selectedIndicators) {
+    dispatch(requestHist(pareName, fromISO, toISO, selectedIndicators));
   },
 });
 
