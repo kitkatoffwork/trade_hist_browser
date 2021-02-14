@@ -29,20 +29,20 @@ const styles = theme => ({
 class TradesHist extends React.Component {
   // INFO: 画面初期描画と同時に実行
   componentDidMount() {
-    this.props.onMount();
+    this.props.requestIndicatorNames();
   }
 
   /* この componentDidUpdate をコメントアウトしても、少なくとも初回は request が飛んでいる */
   // componentDidUpdate(nextProps) {
   //   if (this.props.pareName !== nextProps.pareName) {
-  //     this.props.onUpdate(nextProps.pareName);
+  //     this.props.requestHist(nextProps.pareName);
   //   }
   // }
 
   render() {
     const {
       classes,
-      selectPair, changeSelectedIndicators, setFromDatetime, setToDatetime, request,
+      selectPair, changeSelectedIndicators, setFromDatetime, setToDatetime, requestHist,
       indicatorNames, selectedIndicators, pareName, fromISO, toISO, status, data, errorMsg
     } = this.props;
 
@@ -77,7 +77,7 @@ class TradesHist extends React.Component {
         <Button size="small"
                 color="primary"
                 variant="contained"
-                onClick={() => request(pareName, fromISO, toISO, selectedIndicators)} disabled={status === 1}>
+                onClick={() => requestHist(pareName, fromISO, toISO, selectedIndicators)} disabled={status === 1}>
           Load Hist
         </Button>
 
@@ -139,10 +139,9 @@ export default withStyles(styles, )(TradesHist);
 TradesHist.propTypes = {
   classes: PropTypes.object.isRequired,
   // Actions
-  onMount: PropTypes.func.isRequired,
-  onUpdate: PropTypes.func.isRequired,
+  requestIndicatorNames: PropTypes.func.isRequired,
   selectPair: PropTypes.func.isRequired,
-  request: PropTypes.func.isRequired,
+  requestHist: PropTypes.func.isRequired,
 
   // States
   indicatorNames: PropTypes.arrayOf(PropTypes.string).isRequired,

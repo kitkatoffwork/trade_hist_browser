@@ -5,7 +5,7 @@ import {
   // Actions
   setIndicatorNames, changeSelectedIndicators,
   selectPair, setFromDatetime, setToDatetime,
-  request, receiveResponse, finishRequest
+  startRequest, receiveResponse, finishRequest
 } from '../reducers/TradesHist';
 
 const API_URL = process.env.REACT_APP_HIST_API_URL
@@ -22,7 +22,7 @@ const requestIndicatorNames = () => async dispatch => {
 
 const requestHist = (pareName, fromISO, toISO, selectedIndicators) => {
   return async dispatch => {
-    dispatch(request());
+    dispatch(startRequest());
 
     try {
       const indicator_params = selectedIndicators.map(name => `indicator_names[]=${name}`)
@@ -69,28 +69,10 @@ const mapStateToProps = (state, ownProps) => ({
   errorMsg: state.requestReducer.errorMsg
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  onMount() {
-    dispatch(requestIndicatorNames());
-  },
-  onUpdate(pareName) {
-    dispatch(requestHist(pareName));
-  },
-  selectPair(pairName) {
-    dispatch(selectPair(pairName));
-  },
-  changeSelectedIndicators(selected) {
-    dispatch(changeSelectedIndicators(selected))
-  },
-  setFromDatetime(fromISO) {
-    dispatch(setFromDatetime(fromISO));
-  },
-  setToDatetime(toISO) {
-    dispatch(setToDatetime(toISO));
-  },
-  request(pareName, fromISO, toISO, selectedIndicators) {
-    dispatch(requestHist(pareName, fromISO, toISO, selectedIndicators));
-  },
-});
+const mapDispatchToProps = {
+  requestIndicatorNames,
+  selectPair, changeSelectedIndicators, setFromDatetime, setToDatetime,
+  requestHist,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(TradesHist);

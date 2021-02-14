@@ -40,18 +40,8 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    inputTask(task) {
-      dispatch(inputTask(task));
-    },
-    addTask(task) {
-      dispatch(addTask(task));
-    },
-    asyncAddTask(task) {
-      dispatch(asyncAddTask(task));
-    }
-  }
+const mapDispatchToProps = {
+  inputTask, addTask, asyncAddTask,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TasksApp)

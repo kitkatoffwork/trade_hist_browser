@@ -35,7 +35,7 @@ const slice = createSlice({
     setToDatetime(state, action) {
       state.toISO = action.payload
     },
-    request(state, _action) {
+    startRequest(state, _action) {
       state.status = statuses.loading
       state.data = []
     },
@@ -56,7 +56,7 @@ export const {
   setIndicatorNames, changeSelectedIndicators,
   selectPair,
   setFromDatetime, setToDatetime,
-  request, receiveResponse, finishRequest
+  startRequest, receiveResponse, finishRequest
 } = slice.actions
 
 export default slice.reducer
